@@ -1,6 +1,6 @@
 # invoice app
 
-A new Flutter project.
+The First Flutter project.
 
 ## Getting Started
 
