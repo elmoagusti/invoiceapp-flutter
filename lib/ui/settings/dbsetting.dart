@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
-
 import 'package:file_picker/file_picker.dart';
 import '../home.dart';
 
@@ -35,7 +35,7 @@ class _DbSettingState extends State<DbSetting> {
           style: ElevatedButton.styleFrom(
               primary: Colors.amber[600], elevation: 0.0),
         ),
-        title: Text("Backup/Restore Data"),
+        title: Text("Backup/Restore DataBase"),
       ),
       body: Center(
         child: Column(
@@ -45,12 +45,12 @@ class _DbSettingState extends State<DbSetting> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.amber[600],
-                  // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  textStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                  )),
               onPressed: () async {
-                final dbFolder = await getDatabasesPath();
-                File source1 = File('$dbFolder/dbprintin');
+                final dbFolder = await getApplicationDocumentsDirectory();
+                File source1 = File('${dbFolder.path}/dbprintin');
 
                 Directory copyTo = Directory("storage/emulated/0/Documents");
                 if ((await copyTo.exists())) {
@@ -73,35 +73,36 @@ class _DbSettingState extends State<DbSetting> {
                 await source1.copy(newPath);
 
                 setState(() {
-                  message = 'Successfully Copied DB to $newPath';
+                  message = 'Successfully backup DB to $newPath';
                 });
               },
-              child: const Text('Backup DataBase'),
+              child: const Text('Backup AllData'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.amber[600],
-                  textStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                  )),
               onPressed: () async {
-                var databasesPath = await getDatabasesPath();
-                var dbPath = join(databasesPath, 'dbprintin');
+                var databasesPath = await getApplicationDocumentsDirectory();
+                var dbPath = join(databasesPath.path, 'dbprintin');
                 await deleteDatabase(dbPath);
                 setState(() {
-                  message = 'Successfully deleted DB';
+                  message = 'Successfully deleted DataBase';
                 });
               },
-              child: const Text('Delete DataBase'),
+              child: const Text('Delete AllData'),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.amber[600],
-                  // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  textStyle:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                  )),
               onPressed: () async {
-                var databasesPath = await getDatabasesPath();
-                var dbPath = join(databasesPath, 'dbprintin');
+                var databasesPath = await getApplicationDocumentsDirectory();
+                var dbPath = join(databasesPath.path, 'dbprintin');
 
                 FilePickerResult? result =
                     await FilePicker.platform.pickFiles();
@@ -118,7 +119,7 @@ class _DbSettingState extends State<DbSetting> {
 
                 }
               },
-              child: const Text('Restore DataBase'),
+              child: const Text('Restore Data'),
             ),
           ],
         ),
