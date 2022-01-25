@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:untitled2/models/main.dart';
 import 'package:untitled2/services/main_service.dart';
+import 'package:untitled2/ui/settings/dbsetting.dart';
 import 'package:untitled2/ui/settings/picker.dart';
 
 import '../home.dart';
@@ -182,6 +183,16 @@ class _MainScreenState extends State<MainScreen> {
                   },
                 )
               : Text(""),
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => DbSetting()));
+            },
+          )
         ],
         title: Text('Main Settings'),
       ),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:untitled2/repo/sharedprefs.dart';
 import 'package:untitled2/ui/reports/sales_summary.dart';
 import 'package:untitled2/ui/settings/mains.dart';
 import 'package:untitled2/ui/settings/printer.dart';
