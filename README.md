@@ -26,7 +26,7 @@ Fitur-fitur yang tersedia pada aplikasi:
 # Teknologi yang digunakan
 
 - sqlite (untuk menyimpan data-data permanen pada sistem)
-- esc pos (untuk meencetak struk pada printer thermal bluetooth)
+- esc pos (untuk mencetak struk pada printer thermal bluetooth)
 - shared preference (untuk menyimpan data-data sementara pada sistem)
 - set state management
 
