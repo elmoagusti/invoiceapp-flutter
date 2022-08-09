@@ -26,15 +26,18 @@ Fitur-fitur yang tersedia pada aplikasi:
 
 # Tampilan
 
-- transaksi
-
+- tampilan halaman utama (pemilihan kategori dan produk)
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/7.jpeg )
+- tampilan menu yang sudah dipilih
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/5.jpeg )
+- tampilan halaman pembayaran
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/4.jpeg )
+- tampilan halaman pembayaran berhasil
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/3.jpeg )
 
-- Laporan
-
+- tampilan menu
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/6.jpeg )
+- tampilan halaman laporan
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/1.jpeg )
+- tampilan halaman transaksi detail
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/2.jpeg )
