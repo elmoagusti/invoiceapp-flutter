@@ -1,7 +1,7 @@
 # Tentang invoice app
 
 Halo semuanya! ini adalah proyek pertama saya dalam pembuatan aplikasi mobile menggunakan bahasa dart dengan framework flutter. 
-Aplikasi ini dirancang dan dikembangkan untuk kebutuhan pelaku UMKM dalam management data pendapatan dan mencetak struk pembelian. Aplikasi ini dapat mencetak struk dengan printer bluetooth dengan ukuran kertas 58mm, aplikasi ini tidak memerlukan internet, karena menyimpan data langsung di device.
+Aplikasi ini dirancang dan dikembangkan untuk kebutuhan pelaku UMKM dalam management data pendapatan dan mencetak struk pembelian. Aplikasi ini dapat mencetak struk dengan printer bluetooth dan ukuran kertas 58mm, aplikasi ini tidak memerlukan internet, karena menyimpan data langsung di device.
 
 ## Fitur yang tersedia
 
@@ -10,11 +10,11 @@ Fitur-fitur yang tersedia pada aplikasi:
 - Management kategori produk
 - Management produk
 - Management tipe pembayaran
-- fitur pembayaran
-- manajemen data UMKM
-- fitur cetak struk printer bluetooth 58mm
-- fitur backup data
-- laporan harian omset
+- Fitur pembayaran
+- Management data UMKM
+- Fitur cetak struk printer bluetooth 58mm
+- Fitur backup data
+- Laporan harian omset
   
 # Teknologi yang digunakan
 
@@ -58,5 +58,8 @@ Fitur-fitur yang tersedia pada aplikasi:
 - hasil cetak struk
 
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/struk.jpeg )
+
+- PrintIn. semua bisa diprint!
+
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/printin.jpeg )
 
