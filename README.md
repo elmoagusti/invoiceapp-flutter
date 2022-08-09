@@ -1,19 +1,36 @@
-# invoice app
+# Tentang invoice app
 
-The First Flutter project.
+Halo semuanya! ini adalah proyek pertama saya dalam pembuatan aplikasi mobile menggunakan bahasa dart dengan framework flutter. 
+Aplikasi ini dirancang dan dikembangkan untuk kebutuhan pelaku UMKM dalam management data pendapatan dan mencetak struk pembelian. Aplikasi ini dapat mencetak struk dengan printer bluetooth dengan ukuran kertas 58mm, aplikasi ini tidak memerlukan internet, karena menyimpan data langsung di device.
 
-## Getting Started
+## Fitur yang tersedia
 
-This project is a starting point for a Flutter application.
+Fitur-fitur yang tersedia pada aplikasi:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Management kategori produk
+- Management produk
+- Management tipe pembayaran
+- fitur pembayaran
+- manajemen data UMKM
+- fitur cetak struk printer bluetooth 58mm
+- fitur backup data
+- laporan harian omset
   
+# Teknologi yang digunakan
+
+- sqlite (untuk menyimpan data-data permanen pada sistem)
+- esc pos (untuk meencetak struk pada printer thermal bluetooth)
+- shared preference (untuk menyimpan data-data sementara pada sistem)
+- set state management
+
+
+# User Interface 
+
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/7.jpeg )
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/5.jpeg )
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# invoiceapp-flutter-setstate
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/4.jpeg )
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/3.jpeg )
+
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/6.jpeg )
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/1.jpeg )
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/2.jpeg )
