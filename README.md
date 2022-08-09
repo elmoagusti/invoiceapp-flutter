@@ -24,12 +24,16 @@ Fitur-fitur yang tersedia pada aplikasi:
 - set state management
 
 
-# User Interface 
+# Tampilan
+
+- transaksi
 
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/7.jpeg )
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/5.jpeg )
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/4.jpeg )
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/3.jpeg )
+
+- Laporan
 
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/6.jpeg )
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/1.jpeg )
