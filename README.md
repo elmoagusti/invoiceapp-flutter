@@ -53,3 +53,10 @@ Fitur-fitur yang tersedia pada aplikasi:
 - tampilan halaman transaksi detail
 
 ![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/2.jpeg )
+
+
+- hasil cetak struk
+
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/struk.jpeg )
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/printin.jpeg )
+
