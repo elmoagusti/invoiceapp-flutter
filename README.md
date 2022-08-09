@@ -1,10 +1,13 @@
+
+![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/ui.jpeg )
+
+
+
+
 # Tentang invoice app
 
 Halo semuanya! ini adalah proyek pertama saya dalam pembuatan aplikasi mobile menggunakan bahasa dart dengan framework flutter. 
 Aplikasi ini dirancang dan dikembangkan untuk kebutuhan pelaku UMKM dalam management data pendapatan dan mencetak struk pembelian. Aplikasi ini dapat mencetak struk dengan printer bluetooth dan ukuran kertas 58mm, aplikasi ini tidak memerlukan internet, karena menyimpan data langsung di device.
-
-
-![image.png](https://raw.githubusercontent.com/elmoagusti/invoiceapp-flutter/main/sample/screenshoots/ui.jpeg )
 
 
 ## Fitur yang tersedia
