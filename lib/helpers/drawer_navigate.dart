@@ -13,23 +13,6 @@ class DrawerNavigate extends StatefulWidget {
 }
 
 class _DrawerNavigateState extends State<DrawerNavigate> {
-  // bool status = true;
-  // var username = 'accesspoint';
-  // var password = DateFormat('25' + 'yyMd' + '99').format(DateTime.now());
-  // var _controllerName = TextEditingController();
-  // var _controllerPass = TextEditingController();
-
-  // getStatus() async {
-  //   var data = await SharedPref.getactivations();
-  //   setState(() {
-  //     if (data == true) {
-  //       status = true;
-  //     } else if (data == false) {
-  //       status = false;
-  //     }
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -117,13 +100,6 @@ class _DrawerNavigateState extends State<DrawerNavigate> {
                 alignment: Alignment(-1.3, 0),
               ),
               onTap: () {
-                // if (status == true) {
-                // _showFormDialog(context);
-                // } else if (status == false) {
-                // Navigator.of(context).pushReplacement(
-                //     MaterialPageRoute(builder: (context) => MainScreen()));
-                // }
-                // print(status);
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => MainScreen()));
               },
@@ -145,76 +121,4 @@ class _DrawerNavigateState extends State<DrawerNavigate> {
       ),
     );
   }
-
-  // _showFormDialog(BuildContext context) {
-  //   return showDialog(
-  //       context: context,
-  //       barrierDismissible: true,
-  //       builder: (params) {
-  //         return SingleChildScrollView(
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.end,
-  //             children: [
-  //               AlertDialog(
-  //                 actions: <Widget>[
-  //                   TextButton(
-  //                     onPressed: () {
-  //                       Navigator.pop(context);
-  //                     },
-  //                     child: Text(
-  //                       'Cancel',
-  //                       style: TextStyle(color: Colors.grey),
-  //                     ),
-  //                   ),
-  //                   TextButton(
-  //                     onPressed: () async {
-  //                       print(_controllerName.text);
-  //                       print(_controllerPass.text);
-  //                       if (_controllerPass.text != password) {
-  //                         print("Password salah" + password);
-  //                       } else if (_controllerName.text != username) {
-  //                         print("username salah" + username);
-  //                       } else if (_controllerName.text == username ||
-  //                           _controllerPass.text == password) {
-  //                         print("udah bener");
-  //                         status = false;
-  //                         await SharedPref.activateData(status);
-  //                         Navigator.of(context).pushReplacement(
-  //                             MaterialPageRoute(
-  //                                 builder: (context) => HomeScreen()));
-  //                       }
-  //                     },
-  //                     child: Text(
-  //                       'PROCESS',
-  //                       style: TextStyle(color: Colors.red),
-  //                     ),
-  //                   ),
-  //                 ],
-  //                 title: Center(
-  //                     child: Text(
-  //                   "Activation",
-  //                   style: TextStyle(color: Colors.red),
-  //                 )),
-  //                 content: Column(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: <Widget>[
-  //                     TextField(
-  //                       controller: _controllerName,
-  //                       decoration: InputDecoration(
-  //                           hintText: "Input Username", labelText: "Name"),
-  //                     ),
-  //                     TextField(
-  //                       controller: _controllerPass,
-  //                       obscureText: true,
-  //                       decoration: InputDecoration(
-  //                           hintText: "Input Password", labelText: "Password"),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         );
-  //       });
-  // }
 }
