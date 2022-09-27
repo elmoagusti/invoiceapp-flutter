@@ -32,7 +32,7 @@ class StoresController extends GetxController {
       footer: footer,
       logo: logo,
     );
-    final data = await MainService().saveMain(_main);
+    await MainService().saveMain(_main);
     // print(data);
   }
 
@@ -50,7 +50,7 @@ class StoresController extends GetxController {
       footer: footer,
       logo: logo,
     );
-    final data = await MainService().updateMain(_main);
+    await MainService().updateMain(_main);
     // print(data);
   }
 }

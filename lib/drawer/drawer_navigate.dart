@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:intl/intl.dart';
-import 'package:untitled2/controller/products.dart';
 import 'package:untitled2/controller/store.dart';
 import 'package:untitled2/controller/type_payment.dart';
 import 'package:untitled2/ui/payment/index.dart';
@@ -97,7 +95,7 @@ class DrawerNavigate extends StatelessWidget {
                 alignment: Alignment(-1.3, 0),
               ),
               onTap: () {
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => MainScreen()));
               },
             ),

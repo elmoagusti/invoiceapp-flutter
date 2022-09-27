@@ -5,7 +5,6 @@ import 'package:untitled2/controller/products.dart';
 import 'package:untitled2/controller/type_payment.dart';
 
 import '../../controller/transaction.dart';
-import '../home.dart';
 import 'sales_summary_invoice.dart';
 import 'package:untitled2/extender/print.dart';
 import 'package:bluetooth_thermal_printer/bluetooth_thermal_printer.dart';

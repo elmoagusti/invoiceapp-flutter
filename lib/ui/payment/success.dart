@@ -1,21 +1,10 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:bluetooth_thermal_printer/bluetooth_thermal_printer.dart';
-import 'package:esc_pos_utils_plus/esc_pos_utils.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:intl/intl.dart';
 import 'package:untitled2/extender/print.dart';
 import 'package:untitled2/models/cart.dart';
 import 'package:untitled2/models/main.dart';
-import 'package:untitled2/models/transaction_details.dart';
-import 'package:untitled2/services/main_service.dart';
-import 'package:untitled2/services/transaction_details_service.dart';
-import 'package:image/image.dart';
 import 'package:untitled2/ui/settings/printer.dart';
-
-import '../../controller/cart.dart';
-import '../../controller/store.dart';
 import '../home.dart';
 
 // class Success extends StatefulWidget {

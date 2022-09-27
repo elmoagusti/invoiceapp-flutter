@@ -698,7 +698,7 @@ class HomeScreen extends StatelessWidget {
   final S = Get.put(StoresController());
   final T = Get.put(CartsController());
   final P = Get.put(TypePaymentController());
-  final Trx = Get.put(TransactionsController());
+  final trx = Get.put(TransactionsController());
 
   final f = NumberFormat("Rp #,##0", "en_US");
 

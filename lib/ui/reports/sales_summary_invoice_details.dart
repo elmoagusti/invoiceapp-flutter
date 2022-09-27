@@ -4,16 +4,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled2/controller/transaction.dart';
 import 'package:untitled2/extender/print.dart';
-import 'package:untitled2/models/main.dart';
 import 'package:untitled2/models/transaction.dart';
 import 'package:untitled2/models/transaction_details.dart';
-import 'package:untitled2/services/main_service.dart';
-import 'package:untitled2/services/transaction_details_service.dart';
-import 'package:untitled2/services/transaction_service.dart';
-import 'package:untitled2/ui/reports/sales_summary_invoice.dart';
-import 'package:esc_pos_utils_plus/esc_pos_utils.dart';
-import 'package:image/image.dart';
-
 import '../../controller/store.dart';
 
 // class InvoiceDetails extends StatefulWidget {

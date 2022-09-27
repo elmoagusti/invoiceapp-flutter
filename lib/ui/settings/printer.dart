@@ -7,7 +7,6 @@ import 'package:flutter/material.dart' hide Image;
 import 'package:esc_pos_utils_plus/esc_pos_utils.dart';
 // import 'package:flutter/services.dart';
 
-import '../home.dart';
 
 class Printer extends StatefulWidget {
   @override

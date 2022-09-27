@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../repo/sharedprefs.dart';
-
 class HelpC extends GetxController {
   void onInit() {
     super.onInit();

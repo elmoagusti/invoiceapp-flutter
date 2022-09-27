@@ -22,7 +22,7 @@ class CategoriesController extends GetxController {
       id: null,
       name: a,
     );
-    final data = await CategoryService().saveCategory(_category);
+    await CategoryService().saveCategory(_category);
     // print(data);
     // return data;
   }

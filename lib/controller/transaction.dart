@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:untitled2/controller/cart.dart';
+
 import 'package:untitled2/models/cart.dart';
 import 'package:untitled2/models/transaction.dart';
 import 'package:untitled2/models/transaction_details.dart';
@@ -83,7 +83,7 @@ class TransactionsController extends GetxController {
           date: date,
         );
 
-        final td = await DetailService().saveCart(_detail);
+        await DetailService().saveCart(_detail);
 
         // print("id detail " + td.toString());
       }
