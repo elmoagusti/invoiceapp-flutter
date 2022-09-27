@@ -5,19 +5,10 @@ import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:file_picker/file_picker.dart';
+import '../../src/config.dart';
 import '../home.dart';
 
-// import 'package:file_picker/file_picker.dart';
-class DbSetting extends StatefulWidget {
-  const DbSetting({Key? key}) : super(key: key);
-
-  @override
-  _DbSettingState createState() => _DbSettingState();
-}
-
-class _DbSettingState extends State<DbSetting> {
-  String message = '';
-
+class DbSetting extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +32,6 @@ class _DbSettingState extends State<DbSetting> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(message),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                   primary: Colors.amber[600],
@@ -54,14 +44,15 @@ class _DbSettingState extends State<DbSetting> {
 
                 Directory copyTo = Directory("storage/emulated/0/Documents");
                 if ((await copyTo.exists())) {
-                  // print("Path exist");
-                  var status = await Permission.storage.status;
+                  var status = await Permission.manageExternalStorage.status;
                   if (!status.isGranted) {
-                    await Permission.storage.request();
+                    await Permission.manageExternalStorage.request();
                   }
                 } else {
                   print("not exist");
-                  if (await Permission.storage.request().isGranted) {
+                  if (await Permission.manageExternalStorage
+                      .request()
+                      .isGranted) {
                     // Either the permission was already granted before or the user just granted it.
                     await copyTo.create();
                   } else {
@@ -71,10 +62,7 @@ class _DbSettingState extends State<DbSetting> {
 
                 String newPath = "${copyTo.path}/dbprintin";
                 await source1.copy(newPath);
-
-                setState(() {
-                  message = 'Successfully backup DB to $newPath';
-                });
+                notif(context, "Directory: " + newPath, true);
               },
               child: const Text('Backup AllData'),
             ),
@@ -88,9 +76,7 @@ class _DbSettingState extends State<DbSetting> {
                 var databasesPath = await getApplicationDocumentsDirectory();
                 var dbPath = join(databasesPath.path, 'dbprintin');
                 await deleteDatabase(dbPath);
-                setState(() {
-                  message = 'Successfully deleted DataBase';
-                });
+                notif(context, "success clear data, please restart apps", true);
               },
               child: const Text('Delete AllData'),
             ),
@@ -108,15 +94,17 @@ class _DbSettingState extends State<DbSetting> {
                     await FilePicker.platform.pickFiles();
 
                 if (result != null) {
-                  File source = File(result.files.single.path!);
-                  await source.copy(dbPath);
-                  setState(() {
-                    message =
-                        'Successfully Restored DB, Please Restart Applications';
-                  });
+                  if (result.names.toString() == "[dbprintin]") {
+                    File source = File(result.files.single.path!);
+                    await source.copy(dbPath);
+                    notif(context, "success restore data, please restart apps",
+                        true);
+                  } else {
+                    // User canceled the picker
+                    notif(context, "file type not true ${result.names}", false);
+                  }
                 } else {
                   // User canceled the picker
-
                 }
               },
               child: const Text('Restore Data'),
@@ -124,6 +112,73 @@ class _DbSettingState extends State<DbSetting> {
           ],
         ),
       ),
+    );
+  }
+
+  notif(context, msg, status) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (params) {
+        return AlertDialog(
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(
+                'Close',
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+          ],
+          content: Container(
+            // color: Colors.red,
+            height: SizeConfig.blockSizeVertical! * 25,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  status == true
+                      ? Icon(
+                          Icons.check_circle,
+                          color: Colors.green[600],
+                          size: SizeConfig.blockSizeVertical! * 20,
+                        )
+                      : Icon(
+                          Icons.highlight_off,
+                          color: Colors.red[600],
+                          size: SizeConfig.blockSizeVertical! * 20,
+                        ),
+                  status == true
+                      ? Text(
+                          "Success",
+                          style: TextStyle(
+                              color: Colors.green[600],
+                              fontSize: SizeConfig.blockSizeVertical! * 2,
+                              fontWeight: FontWeight.w600),
+                        )
+                      : Text(
+                          "Failed",
+                          style: TextStyle(
+                              color: Colors.red[600],
+                              fontSize: SizeConfig.blockSizeVertical! * 2,
+                              fontWeight: FontWeight.w600),
+                        ),
+                  Text(
+                    msg,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: SizeConfig.blockSizeVertical! * 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

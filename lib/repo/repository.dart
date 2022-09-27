@@ -26,7 +26,9 @@ class Repository {
   //readdata
   readData(table) async {
     var connection = await database;
-    return await connection.query(table, orderBy: "id ASC");
+    return await connection.query(
+      table,
+    );
   }
 
   sortData(table) async {
@@ -38,8 +40,7 @@ class Repository {
   readDataByinv(table, inv) async {
     var connection = await database;
     // print(id);
-    return await connection
-        .query(table, where: 'noinvoice = ?', whereArgs: [inv]);
+    return await connection.query(table, where: 'trxid = ?', whereArgs: [inv]);
   }
 
   readDataBycategory(table, category) async {
@@ -73,16 +74,30 @@ class Repository {
     return await connection.rawDelete("DELETE FROM $table WHERE id = $id");
   }
 
-  deleteDatawithinv(table, inv) async {
+  deleteDatawithinv(table, notrx) async {
     var connection = await database;
     // return await connection
     //     .rawDelete("DELETE FROM $table WHERE noinvoice = $inv");
     return await connection
-        .delete(table, where: 'noinvoice = ?', whereArgs: [inv]);
+        .delete(table, where: 'trxid = ?', whereArgs: [notrx]);
   }
 
   deleteAll(table) async {
     var connection = await database;
     return await connection.rawDelete("DELETE FROM $table");
+  }
+
+  //custom product get
+  readDataJoin(table) async {
+    var connection = await database;
+    return await connection.rawQuery(
+        'SELECT id,name,price,category,categories_name FROM products INNER JOIN categories ON products.category = categories.categories_id');
+  }
+
+  //custom trx get
+  readTrxJoin(table) async {
+    var connection = await database;
+    return await connection.rawQuery(
+        'SELECT id,name,price,category,categories_name FROM products INNER JOIN categories ON products.category = categories.categories_id');
   }
 }

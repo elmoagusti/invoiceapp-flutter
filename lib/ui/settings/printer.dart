@@ -496,23 +496,23 @@ class _PrinterState extends State<Printer> {
               ),
             ),
           ),
-          bottomNavigationBar: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.amber[600]),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                ),
-              ),
-            ),
-            child: Text(
-              'GET STARTED',
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-            ),
-            onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen())),
-          ),
+          // bottomNavigationBar: ElevatedButton(
+          //   style: ButtonStyle(
+          //     backgroundColor: MaterialStateProperty.all(Colors.amber[600]),
+          //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          //       RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(18.0),
+          //       ),
+          //     ),
+          //   ),
+          //   child: Text(
+          //     'GET STARTED',
+          //     style:
+          //         TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+          //   ),
+          //   onPressed: () => Navigator.of(context).pushReplacement(
+          //       MaterialPageRoute(builder: (context) => HomeScreen())),
+          // ),
         ),
       ),
     );
@@ -530,7 +530,7 @@ class _PrinterState extends State<Printer> {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Start',
+                  'Tutup',
                   style: TextStyle(color: Colors.amber),
                 ),
               ),

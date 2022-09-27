@@ -8,9 +8,9 @@ class TypePaymentService {
     _repository = Repository();
   }
 
-  savePay(TypePayment typepayment) async {
+  savePay(TypePayments typepayments) async {
     return await _repository?.inserData(
-        'payments', typepayment.typepaymentMap());
+        'payments', typepayments.typePaymentsMap());
   }
 
   readPay() async {

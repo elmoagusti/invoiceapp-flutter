@@ -1,332 +1,339 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:untitled2/models/product.dart';
-import 'package:untitled2/models/transaction.dart';
-import 'package:untitled2/models/transaction_details.dart';
-import 'package:untitled2/models/type_payment.dart';
-import 'package:untitled2/services/product_service.dart';
-import 'package:untitled2/services/transaction_details_service.dart';
-import 'package:untitled2/services/transaction_service.dart';
-import 'package:untitled2/services/typepayment_service.dart';
+import 'package:untitled2/controller/products.dart';
+import 'package:untitled2/controller/type_payment.dart';
 
+import '../../controller/transaction.dart';
 import '../home.dart';
 import 'sales_summary_invoice.dart';
-
+import 'package:untitled2/extender/print.dart';
 import 'package:bluetooth_thermal_printer/bluetooth_thermal_printer.dart';
-import 'package:esc_pos_utils_plus/esc_pos_utils.dart';
 
-class SalesSummary extends StatefulWidget {
-  const SalesSummary({Key? key}) : super(key: key);
+// class SalesSummary extends StatefulWidget {
+//   const SalesSummary({Key? key}) : super(key: key);
 
-  @override
-  _SalesSummaryState createState() => _SalesSummaryState();
-}
+//   @override
+//   _SalesSummaryState createState() => _SalesSummaryState();
+// }
 
-class _SalesSummaryState extends State<SalesSummary> {
-  double subTotal = 0;
-  double discount = 0;
-  double tax = 0;
-  double netTotal = 0;
+class SalesSummary extends StatelessWidget {
+  final product = Get.put(ProductsController());
+  final trx = Get.put(TransactionsController());
+  final typePay = Get.put(TypePaymentController());
+  // double subTotal = 0;
+  // double discount = 0;
+  // double tax = 0;
+  // double netTotal = 0;
 
-  var _productService = ProductService();
+  // var _productService = ProductService();
 
-  List<Product> _productList = <Product>[];
+  // List<Product> _productList = <Product>[];
 
-  List<TransactionDetails> _detailList = <TransactionDetails>[];
-  var _detailService = DetailService();
+  // List<TransactionDetails> _detailList = <TransactionDetails>[];
+  // var _detailService = DetailService();
 
-  //filter
-  String? ff;
-  double filter = 0;
-  var datenow = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  List<TypePayment> _payList = <TypePayment>[];
-  var _payService = TypePaymentService();
+  // //filter
+  // String? ff;
+  // double filter = 0;
+  // var datenow = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  // List<TypePayment> _payList = <TypePayment>[];
+  // var _payService = TypePaymentService();
 
-  var _transactionService = TransactionService();
-  var f = NumberFormat("Rp #,##0.00", "en_US");
+  // var _transactionService = TransactionService();
+  final f = NumberFormat("Rp #,##0.00", "en_US");
 
-  List<Transaction> _transaksiList = <Transaction>[];
+  // List<Transaction> _transaksiList = <Transaction>[];
 
-  var a = DateFormat('yyyy-MM-dd 00:01:01.000').format(DateTime.now());
-  var b = DateFormat('yyyy-MM-dd 23:59:59.999').format(DateTime.now());
+  // var a = DateFormat('yyyy-MM-dd 00:01:01.000').format(DateTime.now());
+  // var b = DateFormat('yyyy-MM-dd 23:59:59.999').format(DateTime.now());
 
-  @override
-  void initState() {
-    super.initState();
-    getAllpay();
-    getAllinvoice();
-    getAllProducts();
-    getDetailinvoice();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getAllpay();
+  //   getAllinvoice();
+  //   getAllProducts();
+  //   getDetailinvoice();
+  // }
 
-  getAllProducts() async {
-    _productList = <Product>[].toList();
-    var products = await _productService.readProduct();
-    products.forEach((product) {
-      setState(() {
-        var productModel = Product();
-        productModel.name = product['name'];
-        productModel.id = product['id'];
-        _productList.add(productModel);
-      });
-    });
-    print(products);
-  }
+  // getAllProducts() async {
+  //   _productList = <Product>[].toList();
+  //   var products = await _productService.readProduct();
+  //   products.forEach((product) {
+  //     setState(() {
+  //       var productModel = Product();
+  //       productModel.name = product['name'];
+  //       productModel.id = product['id'];
+  //       _productList.add(productModel);
+  //     });
+  //   });
+  //   print(products);
+  // }
 
-  getAllpay() async {
-    _payList = <TypePayment>[].toList();
-    var payments = await _payService.readPay();
-    payments.forEach((a) {
-      setState(() {
-        var payModel = TypePayment();
-        payModel.name = a['name'];
-        payModel.id = a['id'];
-        _payList.add(payModel);
-      });
-    });
-  }
+  // getAllpay() async {
+  //   _payList = <TypePayment>[].toList();
+  //   var payments = await _payService.readPay();
+  //   payments.forEach((a) {
+  //     setState(() {
+  //       var payModel = TypePayment();
+  //       payModel.name = a['name'];
+  //       payModel.id = a['id'];
+  //       _payList.add(payModel);
+  //     });
+  //   });
+  // }
 
-  getDetailinvoice() async {
-    int start = (DateTime.parse(a).millisecondsSinceEpoch);
-    int end = (DateTime.parse(b).millisecondsSinceEpoch);
-    _detailList = <TransactionDetails>[].toList();
-    var transaksi = await _detailService.sortbyDate(start, end);
-    transaksi.forEach((transaction) {
-      setState(() {
-        var transaksiModel = TransactionDetails();
-        transaksiModel.id = transaction['id'];
-        transaksiModel.name = transaction['name'];
-        transaksiModel.qty = transaction['qty'];
-        transaksiModel.date = transaction['date'];
-        _detailList.add(transaksiModel);
-      });
-    });
-    print(transaksi);
-  }
+  // getDetailinvoice() async {
+  //   int start = (DateTime.parse(a).millisecondsSinceEpoch);
+  //   int end = (DateTime.parse(b).millisecondsSinceEpoch);
+  //   _detailList = <TransactionDetails>[].toList();
+  //   var transaksi = await _detailService.sortbyDate(start, end);
+  //   transaksi.forEach((transaction) {
+  //     setState(() {
+  //       var transaksiModel = TransactionDetails();
+  //       transaksiModel.id = transaction['id'];
+  //       transaksiModel.name = transaction['name'];
+  //       transaksiModel.qty = transaction['qty'];
+  //       transaksiModel.date = transaction['date'];
+  //       _detailList.add(transaksiModel);
+  //     });
+  //   });
+  //   print(transaksi);
+  // }
 
-  getAllinvoice() async {
-    int start = (DateTime.parse(a).millisecondsSinceEpoch);
-    int end = (DateTime.parse(b).millisecondsSinceEpoch);
-    _transaksiList = <Transaction>[].toList();
-    var transaksi = await _transactionService.sortbyDate(start, end);
-    transaksi.forEach((transaction) {
-      setState(() {
-        var transaksiModel = Transaction();
-        transaksiModel.id = transaction['id'];
-        transaksiModel.name = transaction['name'];
-        transaksiModel.noinvoice = transaction['noinvoice'];
-        transaksiModel.subtotal = transaction['subtotal'];
-        transaksiModel.discount = transaction['discount'];
-        transaksiModel.tax = transaction['tax'];
-        transaksiModel.nettotal = transaction['nettotal'];
-        transaksiModel.type = transaction['type'];
-        // transaksiModel.money = transaction['money'];
-        // transaksiModel.change = transaction['change'];
-        transaksiModel.date = transaction['date'];
-        _transaksiList.add(transaksiModel);
-      });
-    });
-    print(transaksi);
-    double subt = 0;
-    double disc = 0;
-    double t = 0;
-    double total = 0;
-    for (var i = 0; i < _transaksiList.length; i++) {
-      subt += double.parse(_transaksiList[i].subtotal.toString());
-      disc += double.parse(_transaksiList[i].discount.toString());
-      t += double.parse(_transaksiList[i].tax.toString());
-      total += double.parse(_transaksiList[i].nettotal.toString());
+  // getAllinvoice() async {
+  //   int start = (DateTime.parse(a).millisecondsSinceEpoch);
+  //   int end = (DateTime.parse(b).millisecondsSinceEpoch);
+  //   _transaksiList = <Transaction>[].toList();
+  //   var transaksi = await _transactionService.sortbyDate(start, end);
+  //   transaksi.forEach((transaction) {
+  //     setState(() {
+  //       var transaksiModel = Transaction();
+  //       transaksiModel.id = transaction['id'];
+  //       transaksiModel.name = transaction['name'];
+  //       transaksiModel.noinvoice = transaction['noinvoice'];
+  //       transaksiModel.subtotal = transaction['subtotal'];
+  //       transaksiModel.discount = transaction['discount'];
+  //       transaksiModel.tax = transaction['tax'];
+  //       transaksiModel.nettotal = transaction['nettotal'];
+  //       transaksiModel.type = transaction['type'];
+  //       // transaksiModel.money = transaction['money'];
+  //       // transaksiModel.change = transaction['change'];
+  //       transaksiModel.date = transaction['date'];
+  //       _transaksiList.add(transaksiModel);
+  //     });
+  //   });
+  //   print(transaksi);
+  //   double subt = 0;
+  //   double disc = 0;
+  //   double t = 0;
+  //   double total = 0;
+  //   for (var i = 0; i < _transaksiList.length; i++) {
+  //     subt += double.parse(_transaksiList[i].subtotal.toString());
+  //     disc += double.parse(_transaksiList[i].discount.toString());
+  //     t += double.parse(_transaksiList[i].tax.toString());
+  //     total += double.parse(_transaksiList[i].nettotal.toString());
 
-      subTotal = subt;
-      discount = disc;
-      tax = t;
-      netTotal = total;
-    }
-  }
+  //     subTotal = subt;
+  //     discount = disc;
+  //     tax = t;
+  //     netTotal = total;
+  //   }
+  // }
 
-  _filter(ff) {
-    double n = 0;
-    var elmo = _transaksiList.where((data) => data.type == ff);
-    elmo.forEach((element) {
-      n += double.parse(element.nettotal.toString());
-      print(element.nettotal);
-    });
-    // print(n);
-    filter = n;
-  }
+  // _filter(ff) {
+  //   double n = 0;
+  //   var elmo = _transaksiList.where((data) => data.type == ff);
+  //   elmo.forEach((element) {
+  //     n += double.parse(element.nettotal.toString());
+  //     print(element.nettotal);
+  //   });
+  //   // print(n);
+  //   filter = n;
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        leading: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          style: ElevatedButton.styleFrom(
-              primary: Colors.amber[600], elevation: 0.0),
-        ),
+        // leading: ElevatedButton(
+        //   onPressed: () {
+        //     Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(builder: (context) => HomeScreen()));
+        //   },
+        //   child: Icon(
+        //     Icons.arrow_back_ios,
+        //     color: Colors.white,
+        //   ),
+        //   style: ElevatedButton.styleFrom(
+        //       primary: Colors.amber[600], elevation: 0.0),
+        // ),
         actions: [],
         title: Text('SALES SUMMARY'),
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            color: Colors.grey[200],
-            padding: EdgeInsets.all(20),
-            child: Row(
-              children: <Widget>[
-                Text('Sales Summary: ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 20,
-                        color: Colors.greenAccent[700])),
-                Text(
-                  datenow,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 22,
-                      color: Colors.greenAccent[700]),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.grey[200],
-            padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'SubTotal: ' + f.format(subTotal).toString(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 15,
-                      color: Colors.amber[600]),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.grey[200],
-            padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Tax: ' + f.format(tax).toString(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 15,
-                      color: Colors.amber[600]),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.grey[200],
-            padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Discount: ' + f.format(discount).toString(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 15,
-                      color: Colors.amber[600]),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.grey[200],
-            padding: EdgeInsets.fromLTRB(20, 10, 0, 30),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Net Total: ' + f.format(netTotal).toString(),
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 19,
-                      color: Colors.greenAccent[700]),
-                ),
-              ],
-            ),
-          ),
-          _payList.isEmpty
-              ? Text('')
-              : Container(
-                  padding: EdgeInsets.all(5),
-                  // color: Colors.red,
-                  // width: 1000,
-                  height: 100,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: _payList.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.all(2),
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.amber[200]),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                ),
-                              ),
-                            ),
-                            child: Text(
-                              _payList[index].name.toString(),
-                              style: TextStyle(
-                                  color: Colors.amber[900],
-                                  fontWeight: FontWeight.w900),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                ff = _payList[index].name.toString();
-                                _filter(ff);
-                              });
-                            },
-                          ),
-                        );
-                      })),
-          Container(
-            padding: EdgeInsets.all(50),
-            height: 500,
-            child: Center(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      "Settlement " + ff.toString(),
+      body: GetX<TransactionsController>(
+        init: TransactionsController(),
+        initState: (_) {},
+        builder: (_) {
+          return ListView(
+            children: <Widget>[
+              Container(
+                color: Colors.grey[200],
+                padding: EdgeInsets.all(20),
+                child: Row(
+                  children: <Widget>[
+                    Text('Sales Summary: ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            fontSize: 20,
+                            color: Colors.greenAccent[700])),
+                    Text(
+                      trx.dateNow,
                       style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.greenAccent[700],
-                          fontWeight: FontWeight.w900),
+                          fontWeight: FontWeight.w900,
+                          fontSize: 22,
+                          color: Colors.greenAccent[700]),
                     ),
-                  ),
-                  Text(
-                    f.format(filter),
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.greenAccent[700],
-                        fontWeight: FontWeight.w900),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
-        ],
+              Container(
+                color: Colors.grey[200],
+                padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'SubTotal: ' + f.format(trx.subtotal.value).toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 15,
+                          color: Colors.amber[600]),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                color: Colors.grey[200],
+                padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'Tax: ' + f.format(trx.tax.value).toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 15,
+                          color: Colors.amber[600]),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                color: Colors.grey[200],
+                padding: EdgeInsets.fromLTRB(20, 10, 0, 0),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'Discount: ' + f.format(trx.discount.value).toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 15,
+                          color: Colors.amber[600]),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                color: Colors.grey[200],
+                padding: EdgeInsets.fromLTRB(20, 10, 0, 30),
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      'Net Total: ' + f.format(trx.nettotal.value).toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 19,
+                          color: Colors.greenAccent[700]),
+                    ),
+                  ],
+                ),
+              ),
+              typePay.data.isEmpty
+                  ? Text('')
+                  : Container(
+                      padding: EdgeInsets.all(5),
+                      // color: Colors.red,
+                      // width: 1000,
+                      height: 100,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: typePay.data.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.all(2),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Colors.amber[200]),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(18.0),
+                                    ),
+                                  ),
+                                ),
+                                child: Text(
+                                  typePay.data[index].name.toString(),
+                                  style: TextStyle(
+                                      color: Colors.amber[900],
+                                      fontWeight: FontWeight.w900),
+                                ),
+                                onPressed: () {
+                                  // setState(() {
+                                  //   ff = _payList[index].name.toString();
+                                  //   _filter(ff);
+
+                                  // });
+                                  trx.filter(typePay.data[index].id);
+                                },
+                              ),
+                            );
+                          })),
+              Container(
+                padding: EdgeInsets.all(50),
+                height: 500,
+                child: Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(
+                          "Settlement " + typePay.data[0].name,
+                          // "Settlement " + ff.toString(),
+
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.greenAccent[700],
+                              fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                      Text(
+                        f.format(trx.settlement.value),
+
+                        // f.format(filter),
+                        style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.greenAccent[700],
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: Container(
         height: 30,
@@ -365,11 +372,7 @@ class _SalesSummaryState extends State<SalesSummary> {
                 style: TextStyle(
                     color: Colors.amber[900], fontWeight: FontWeight.w900),
               ),
-              onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => SalesInvoice(),
-                ),
-              ),
+              onPressed: () => Get.to(SalesInvoice()),
             ),
           ],
         ),
@@ -380,192 +383,20 @@ class _SalesSummaryState extends State<SalesSummary> {
   Future<void> printTicket() async {
     String? isConnected = await BluetoothThermalPrinter.connectionStatus;
     if (isConnected == "true") {
-      List<int> bytes = await getTicket();
+      List<int> bytes = await Print().getSettlement(
+          trx.dateNow,
+          trx.subtotal.value,
+          trx.discount.value,
+          trx.tax.value,
+          trx.nettotal.value,
+          typePay.data,
+          trx.data,
+          trx.dataDetail,
+          product.data);
       final result = await BluetoothThermalPrinter.writeBytes(bytes);
       print("Print $result");
     } else {
       // _failed();
     }
-  }
-
-  Future<List<int>> getTicket() async {
-    List<int> bytes = [];
-    CapabilityProfile profile = await CapabilityProfile.load();
-    final generator = Generator(PaperSize.mm58, profile);
-
-    bytes += generator.text("SALES SUMMARY",
-        styles: PosStyles(
-          align: PosAlign.center,
-          height: PosTextSize.size2,
-          width: PosTextSize.size2,
-        ),
-        linesAfter: 1);
-    bytes += generator.text(
-      datenow,
-      styles: PosStyles(
-        align: PosAlign.center,
-        height: PosTextSize.size2,
-        width: PosTextSize.size2,
-      ),
-    );
-    bytes += generator.hr(ch: '=', linesAfter: 1);
-    bytes += generator.text(
-      "*SALES",
-      styles: PosStyles(
-        align: PosAlign.right,
-        bold: true,
-      ),
-    );
-    bytes += generator.text(
-      "SUBTOTAL ${f.format(subTotal)}",
-      styles: PosStyles(
-        align: PosAlign.left,
-        bold: true,
-        height: PosTextSize.size1,
-        width: PosTextSize.size1,
-      ),
-    );
-    bytes += generator.text(
-      "DISCOUNT: ${f.format(discount)}",
-      styles: PosStyles(
-        align: PosAlign.left,
-        bold: true,
-        height: PosTextSize.size1,
-        width: PosTextSize.size1,
-      ),
-    );
-    bytes += generator.text(
-      "TAX: ${f.format(tax)}",
-      styles: PosStyles(
-        align: PosAlign.left,
-        bold: true,
-        height: PosTextSize.size1,
-        width: PosTextSize.size1,
-      ),
-    );
-    bytes += generator.text(
-      "OMZET: ${f.format(netTotal)}",
-      styles: PosStyles(
-        align: PosAlign.left,
-        bold: true,
-        height: PosTextSize.size1,
-        width: PosTextSize.size1,
-      ),
-    );
-
-    bytes += generator.hr(ch: '=', linesAfter: 1);
-    bytes += generator.text(
-      "*SETTLEMENT",
-      styles: PosStyles(
-        align: PosAlign.right,
-        bold: true,
-      ),
-    );
-
-    for (var i = 0; i < _payList.length; i++) {
-      double n = 0;
-      var elmo = _transaksiList.where((data) => data.type == _payList[i].name);
-      elmo.forEach((element) {
-        n += double.parse(element.nettotal.toString());
-        print(element.nettotal);
-      });
-
-      print(_payList[i].name);
-      bytes += generator.text("${_payList[i].name} : ${f.format(n)}",
-          styles: PosStyles(
-            align: PosAlign.left,
-            bold: true,
-            height: PosTextSize.size1,
-            width: PosTextSize.size1,
-          ),
-          linesAfter: 1);
-      n = 0;
-    }
-    bytes += generator.hr(ch: '=', linesAfter: 1);
-    bytes += generator.text(
-      "*TRANSACTIONS",
-      styles: PosStyles(
-        align: PosAlign.right,
-        bold: true,
-      ),
-    );
-
-    for (var i = 0; i < _transaksiList.length; i++) {
-      bytes += generator.text(
-        "${_transaksiList[i].noinvoice} @ ${_transaksiList[i].name}",
-        styles: PosStyles(
-          align: PosAlign.left,
-          bold: true,
-        ),
-      );
-      bytes += generator.row([
-        PosColumn(
-            text: "${f.format(_transaksiList[i].nettotal)}",
-            width: 6,
-            styles: PosStyles(
-              align: PosAlign.left,
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-            )),
-        PosColumn(
-            text: "${_transaksiList[i].type}",
-            width: 6,
-            styles: PosStyles(
-              align: PosAlign.right,
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-            )),
-      ]);
-    }
-    bytes += generator.text(
-      "Total: ${_transaksiList.length} Transactions",
-      styles: PosStyles(
-        align: PosAlign.right,
-        bold: true,
-      ),
-    );
-    bytes += generator.hr(ch: '=');
-    bytes += generator.text(
-      "*Details Qty product",
-      styles: PosStyles(
-        align: PosAlign.right,
-        bold: true,
-      ),
-    );
-    for (var i = 0; i < _productList.length; i++) {
-      int n = 0;
-      var elmo = _detailList.where((data) => data.name == _productList[i].name);
-      elmo.forEach((element) {
-        n += int.parse(element.qty.toString());
-        print(element.qty);
-        print(n);
-      });
-
-      print(_productList[i].name);
-      bytes += generator.text(
-        "${_productList[i].name} : ${n.toString()}",
-        styles: PosStyles(
-          align: PosAlign.left,
-          bold: true,
-          height: PosTextSize.size1,
-          width: PosTextSize.size1,
-        ),
-      );
-      n = 0;
-    }
-    int quantity = 0;
-
-    for (var i = 0; i < _detailList.length; i++) {
-      quantity += int.parse(_detailList[i].qty.toString());
-    }
-    bytes += generator.text(
-      "Total: ${quantity.toString()} Product",
-      styles: PosStyles(
-        align: PosAlign.right,
-        bold: true,
-      ),
-    );
-    bytes += generator.cut();
-    return bytes;
   }
 }

@@ -1,72 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:untitled2/models/type_payment.dart';
-import 'package:untitled2/services/typepayment_service.dart';
+import 'package:get/get.dart';
+import 'package:untitled2/controller/type_payment.dart';
 
-import '../home.dart';
+class PaymentTypeScreen extends StatelessWidget {
+  final typePayment = Get.put(TypePaymentController());
+  final _paymentNameController = TextEditingController();
 
-class PaymentTypeScreen extends StatefulWidget {
-  // const PaymentTypeScreen({Key? key}) : super(key: key);
+  // var _paymenttype = TypePayment();
+  // var _paymentservice = TypePaymentService();
 
-  @override
-  _PaymentTypeScreenState createState() => _PaymentTypeScreenState();
-}
+  // List<TypePayment> _paymentlist = <TypePayment>[];
+  // var typepayment;
 
-class _PaymentTypeScreenState extends State<PaymentTypeScreen> {
-  var _paymentNameController = TextEditingController();
-
-  var _paymenttype = TypePayment();
-  var _paymentservice = TypePaymentService();
-
-  List<TypePayment> _paymentlist = <TypePayment>[];
-  var typepayment;
-
-  @override
-  void initState() {
-    super.initState();
-    getAllpay();
-    clearform();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getAllpay();
+  //   clearform();
+  // }
 
   clearform() async {
     _paymentNameController.clear();
   }
 
-  getAllpay() async {
-    _paymentlist = <TypePayment>[].toList();
-    var payments = await _paymentservice.readPay();
-    payments.forEach((a) {
-      setState(() {
-        var payModel = TypePayment();
-        payModel.name = a['name'];
+  // getAllpay() async {
+  //   _paymentlist = <TypePayment>[].toList();
+  //   var payments = await _paymentservice.readPay();
+  //   payments.forEach((a) {
+  //     setState(() {
+  //       var payModel = TypePayment();
+  //       payModel.name = a['name'];
 
-        payModel.id = a['id'];
-        _paymentlist.add(payModel);
-      });
-    });
-  }
+  //       payModel.id = a['id'];
+  //       _paymentlist.add(payModel);
+  //     });
+  //   });
+  // }
 
-  _showSnackbar(message) {
+  _showSnackbar(context, message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: message));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // key: _globalKey,
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        leading: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          style: ElevatedButton.styleFrom(
-              primary: Colors.amber[600], elevation: 0.0),
-        ),
         actions: [
           IconButton(
             icon: Icon(
@@ -80,29 +59,35 @@ class _PaymentTypeScreenState extends State<PaymentTypeScreen> {
         ],
         title: Text('Payment Type'),
       ),
-      body: ListView.builder(
-        itemCount: _paymentlist.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.fromLTRB(1, 0, 1, 0),
-            child: Card(
-              // elevation: 11,
-              child: ListTile(
-                title: Row(
-                  children: <Widget>[
-                    Container(
-                        child: Text(
-                      _paymentlist[index].name!,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    )),
-                    Spacer(
-                      flex: 2,
+      body: GetX<TypePaymentController>(
+        init: TypePaymentController(),
+        initState: (_) {},
+        builder: (_) {
+          return ListView.builder(
+            itemCount: typePayment.data.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.fromLTRB(1, 0, 1, 0),
+                child: Card(
+                  // elevation: 11,
+                  child: ListTile(
+                    title: Row(
+                      children: <Widget>[
+                        Container(
+                            child: Text(
+                          typePayment.data[index].name,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        )),
+                        Spacer(
+                          flex: 2,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
       ),
@@ -129,14 +114,15 @@ class _PaymentTypeScreenState extends State<PaymentTypeScreen> {
               TextButton(
                 onPressed: () async {
                   if (_paymentNameController.text.isEmpty) {
-                    _showSnackbar(Text("please fill name"));
+                    _showSnackbar(context, Text("please fill name"));
                   } else {
-                    _paymenttype.name = _paymentNameController.text;
-
-                    await _paymentservice.savePay(_paymenttype);
+                    // _paymenttype.name = _paymentNameController.text;
+                    typePayment.saveData(_paymentNameController.text);
+                    // await _paymentservice.savePay(_paymenttype);
                     Navigator.pop(context);
-                    getAllpay();
-                    _showSnackbar(Text("Saved"));
+                    // getAllpay();
+                    typePayment.getData();
+                    _showSnackbar(context, Text("Saved"));
                     clearform();
                   }
                 },

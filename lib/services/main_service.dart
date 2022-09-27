@@ -8,8 +8,8 @@ class MainService {
     _repository = Repository();
   }
 
-  saveMain(Mains main) async {
-    return await _repository?.inserData('mains', main.mainsMap());
+  saveMain(Stores stores) async {
+    return await _repository?.inserData('mains', stores.storesMap());
   }
 
   readMain() async {
@@ -20,8 +20,8 @@ class MainService {
     return await _repository?.readDataById('mains', id);
   }
 
-  updateMain(Mains main) async {
-    return await _repository?.updateData('mains', main.mainsMap());
+  updateMain(Stores stores) async {
+    return await _repository?.updateData('mains', stores.storesMap());
   }
 
   deleteMain(mainId) async {

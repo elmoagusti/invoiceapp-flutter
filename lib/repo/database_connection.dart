@@ -9,28 +9,28 @@ class DatabaseConnection {
     var database =
         await openDatabase(path, version: 1, onCreate: _onCreatingDatabase);
 
-    print(database);
+    // print(database);
     return database;
   }
 
   _onCreatingDatabase(Database database, int version) async {
-    await database
-        .execute('CREATE TABLE categories( id INTEGER PRIMARY KEY, name TEXT)');
+    await database.execute(
+        'CREATE TABLE categories( categories_id INTEGER PRIMARY KEY, categories_name TEXT)');
 
     await database
         .execute('CREATE TABLE payments( id INTEGER PRIMARY KEY, name TEXT)');
 
     await database.execute(
-        'CREATE TABLE products( id INTEGER PRIMARY KEY, name TEXT, category TEXT, price DOUBLE)');
+        'CREATE TABLE products( id INTEGER PRIMARY KEY, name TEXT, category INTEGER, price DOUBLE)');
 
     await database.execute(
-        'CREATE TABLE transactions( id INTEGER PRIMARY KEY, noinvoice TEXT, name TEXT,tax DOUBLE,subtotal DOUBLE, discount DOUBLE, nettotal DOUBLE, type TEXT, date INT,money DOUBLE, change DOUBLE )');
+        'CREATE TABLE transactions( id INTEGER PRIMARY KEY, noinvoice TEXT, name TEXT,tax DOUBLE,subtotal DOUBLE, discount DOUBLE, nettotal DOUBLE, type INT,typename TEXT , date INT,money DOUBLE, change DOUBLE )');
 
     await database.execute(
-        'CREATE TABLE transactions_details( id INTEGER PRIMARY KEY, noinvoice TEXT,name TEXT, price DOUBLE, qty INTEGER, total DOUBLE, date INT )');
+        'CREATE TABLE transactions_details( id INTEGER PRIMARY KEY, trxid INT, TEXT,name TEXT, price DOUBLE, qty INTEGER, total DOUBLE, date INT )');
 
     await database.execute(
-        'CREATE TABLE carts( id INTEGER PRIMARY KEY, noinvoice TEXT, name TEXT, price DOUBLE, qty INTEGER, total DOUBLE )');
+        'CREATE TABLE carts( id INTEGER PRIMARY KEY, guest TEXT, name TEXT, price DOUBLE, qty INTEGER, total DOUBLE )');
 
     await database.execute(
         'CREATE TABLE invoices( id INTEGER PRIMARY KEY, number INTEGER )');

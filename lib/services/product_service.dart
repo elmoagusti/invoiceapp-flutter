@@ -8,12 +8,16 @@ class ProductService {
     _repository = Repository();
   }
 
-  saveProduct(Product product) async {
-    return await _repository?.inserData('products', product.productMap());
+  saveProduct(Products products) async {
+    return await _repository?.inserData('products', products.productsMap());
   }
 
   readProduct() async {
     return await _repository?.sortData('products');
+  }
+
+  readDataCustom() async {
+    return await _repository?.readDataJoin('products');
   }
 
   readProductById(productId) async {
@@ -24,8 +28,8 @@ class ProductService {
     return await _repository?.readDataBycategory('products', category);
   }
 
-  updateProduct(Product product) async {
-    return await _repository?.updateData('products', product.productMap());
+  updateProduct(Products products) async {
+    return await _repository?.updateData('products', products.productsMap());
   }
 
   deleteProduct(productId) async {

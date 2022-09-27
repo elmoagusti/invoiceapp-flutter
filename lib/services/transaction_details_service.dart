@@ -8,9 +8,9 @@ class DetailService {
     _repository = Repository();
   }
 
-  saveCart(TransactionDetails product) async {
+  saveCart(TransactionDetail product) async {
     return await _repository?.inserData(
-        'transactions_details', product.transactiondetailMap());
+        'transactions_details', product.transactionDetailMap());
   }
 
   readCart() async {
@@ -26,11 +26,11 @@ class DetailService {
         'transactions_details', start, end);
   }
 
-  readDatabyInv(inv) async {
-    return await _repository?.readDataByinv('transactions_details', inv);
+  readDatabyInv(trxid) async {
+    return await _repository?.readDataByinv('transactions_details', trxid);
   }
 
-  delete(inv) async {
-    return await _repository?.deleteDatawithinv('transactions_details', inv);
+  delete(trxid) async {
+    return await _repository?.deleteDatawithinv('transactions_details', trxid);
   }
 }

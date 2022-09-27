@@ -8,9 +8,9 @@ class TransactionService {
     _repository = Repository();
   }
 
-  save(Transaction transaction) async {
+  save(Transactions transactions) async {
     return await _repository?.inserData(
-        'transactions', transaction.transactionMap());
+        'transactions', transactions.transactionsMap());
   }
 
   read() async {
@@ -29,7 +29,7 @@ class TransactionService {
     return await _repository?.readDataWithDate('transactions', start, end);
   }
 
-  delete(inv) async {
-    return await _repository?.deleteDatawithinv('transactions', inv);
+  delete(id) async {
+    return await _repository?.deleteData('transactions', id);
   }
 }

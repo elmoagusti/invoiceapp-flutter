@@ -1,9 +1,9 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:bluetooth_thermal_printer/bluetooth_thermal_printer.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:untitled2/controller/transaction.dart';
+import 'package:untitled2/extender/print.dart';
 import 'package:untitled2/models/main.dart';
 import 'package:untitled2/models/transaction.dart';
 import 'package:untitled2/models/transaction_details.dart';
@@ -14,120 +14,44 @@ import 'package:untitled2/ui/reports/sales_summary_invoice.dart';
 import 'package:esc_pos_utils_plus/esc_pos_utils.dart';
 import 'package:image/image.dart';
 
-class InvoiceDetails extends StatefulWidget {
-  final String invoice;
+import '../../controller/store.dart';
 
-  const InvoiceDetails({
-    Key? key,
-    required this.invoice,
-  }) : super(key: key);
+// class InvoiceDetails extends StatefulWidget {
+//   final String invoice;
 
-  @override
-  _InvoiceDetailsState createState() => _InvoiceDetailsState(invoice);
-}
+//   const InvoiceDetails({
+//     Key? key,
+//     required this.invoice,
+//   }) : super(key: key);
 
-class _InvoiceDetailsState extends State<InvoiceDetails> {
-  String invoice;
-  var f = NumberFormat("Rp #,##0.00", "en_US");
+//   @override
+//   _InvoiceDetailsState createState() => _InvoiceDetailsState(invoice);
+// }
 
-  _InvoiceDetailsState(this.invoice);
-
-  List<Transaction> _transactionList = <Transaction>[];
-  var _transactionService = TransactionService();
-
-  List<TransactionDetails> _detailList = <TransactionDetails>[];
-  var _detailService = DetailService();
-
-  @override
-  void initState() {
-    super.initState();
-    _getDetailsInv(invoice);
-    _getInv(invoice);
-    getMains();
-  }
-
-  _getInv(inv) async {
-    _transactionList = <Transaction>[].toList();
-    var datas = await _transactionService.readDatabyInv(inv);
-    datas.forEach((data) {
-      setState(() {
-        var dataModel = Transaction();
-        dataModel.id = data['id'];
-        dataModel.name = data['name'];
-        dataModel.date = data['date'];
-        dataModel.noinvoice = data['noinvoice'];
-        dataModel.subtotal = data['subtotal'];
-        dataModel.discount = data['discount'];
-        dataModel.tax = data['tax'];
-        dataModel.nettotal = data['nettotal'];
-        dataModel.type = data['type'];
-        dataModel.money = data['money'];
-        dataModel.change = data['change'];
-
-        _transactionList.add(dataModel);
-      });
-    });
-    print(datas);
-  }
-
-  var _mainService = MainService();
-  List<Mains> _mainList = <Mains>[];
-  _getDetailsInv(inv) async {
-    _detailList = <TransactionDetails>[].toList();
-    var datas = await _detailService.readDatabyInv(inv);
-    datas.forEach((data) {
-      setState(() {
-        var dataModel = TransactionDetails();
-        dataModel.id = data['id'];
-        dataModel.name = data['name'];
-        dataModel.noinvoice = data['noinvoice'];
-        dataModel.price = data['price'];
-        dataModel.qty = data['qty'];
-        dataModel.total = data['total'];
-        _detailList.add(dataModel);
-      });
-    });
-    print(datas);
-  }
-
-  getMains() async {
-    _mainList = <Mains>[].toList();
-    var mains = await _mainService.readMain();
-    mains.forEach((a) {
-      setState(() {
-        var mainModel = Mains();
-        mainModel.outlet = a['outlet'];
-        mainModel.store = a['store'];
-        mainModel.address = a['address'];
-        mainModel.phone = a['phone'];
-        mainModel.tax = a['tax'];
-        mainModel.header = a['header'];
-        mainModel.footer = a['footer'];
-        mainModel.logo = a['logo'];
-        mainModel.id = a['id'];
-        _mainList.add(mainModel);
-      });
-    });
-    print(mains);
-  }
-
+class InvoiceDetails extends StatelessWidget {
+  final trx = Get.put(TransactionsController());
+  final f = NumberFormat("Rp #,##0", "en_US");
+  InvoiceDetails({required this.data, required this.detail});
+  final main = Get.put(StoresController());
+  final List<Transactions> data;
+  final List<TransactionDetail> detail;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        leading: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => SalesInvoice()));
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          style: ElevatedButton.styleFrom(
-              primary: Colors.amber[600], elevation: 0.0),
-        ),
+        // leading: ElevatedButton(
+        //   onPressed: () {
+        //     Navigator.of(context).pushReplacement(
+        //         MaterialPageRoute(builder: (context) => SalesInvoice()));
+        //   },
+        //   child: Icon(
+        //     Icons.arrow_back_ios,
+        //     color: Colors.white,
+        //   ),
+        //   style: ElevatedButton.styleFrom(
+        //       primary: Colors.amber[600], elevation: 0.0),
+        // ),
         actions: [],
         title: Text('Detail Transaction'),
       ),
@@ -139,7 +63,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
               child: ListView.builder(
                 itemExtent: 140,
                 scrollDirection: Axis.vertical,
-                itemCount: _transactionList.length,
+                itemCount: data.length,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {},
                   child: Padding(
@@ -154,11 +78,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                               child: Container(
                                 child: Text(
                                     // _productList[index].name!,
-                                    _transactionList[index]
-                                            .noinvoice
-                                            .toString() +
+                                    data[index].noinvoice.toString() +
                                         "  " +
-                                        _transactionList[index].name.toString(),
+                                        data[index].name.toString(),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: TextStyle(fontSize: 15)),
@@ -168,27 +90,26 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                               flex: 2,
                             ),
                             Container(
-                              child: Text(
-                                  _transactionList[index].type.toString(),
+                              child: Text(data[index].typeName.toString(),
                                   style: TextStyle(fontSize: 15)),
                             ),
                           ],
                         ),
                         subtitle: Text("\n" +
                             "SubTotal: " +
-                            f.format(_transactionList[index].subtotal) +
+                            f.format(data[index].subtotal) +
                             "\n" +
                             "Discount: " +
-                            f.format(_transactionList[index].discount) +
+                            f.format(data[index].discount) +
                             "\n" +
                             "NetTotal: " +
-                            f.format(_transactionList[index].nettotal) +
+                            f.format(data[index].nettotal) +
                             "\n" +
                             "Money: " +
-                            f.format(_transactionList[index].money) +
+                            f.format(data[index].money) +
                             "\n" +
                             "Change: " +
-                            f.format(_transactionList[index].change)),
+                            f.format(data[index].change)),
                       ),
                     ),
                   ),
@@ -202,7 +123,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
               child: ListView.builder(
                 itemExtent: 75,
                 scrollDirection: Axis.vertical,
-                itemCount: _detailList.length,
+                itemCount: detail.length,
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {},
                   child: Padding(
@@ -216,7 +137,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                                 flex: 4,
                                 child: Container(
                                     child: Text(
-                                  _detailList[index].name.toString(),
+                                  detail[index].name.toString(),
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   style: TextStyle(fontSize: 13),
@@ -225,14 +146,14 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                               Spacer(
                                 flex: 2,
                               ),
-                              Text(f.format(_detailList[index].total),
+                              Text(f.format(detail[index].total),
                                   style: TextStyle(fontSize: 13))
                             ],
                           ),
                           subtitle: Text(
-                            _detailList[index].qty.toString() +
+                            detail[index].qty.toString() +
                                 " x " +
-                                f.format(_detailList[index].price),
+                                f.format(detail[index].price),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: TextStyle(fontSize: 11),
@@ -266,7 +187,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                       color: Colors.amber[900], fontWeight: FontWeight.w900),
                 ),
                 onPressed: () async {
-                  await printTicket();
+                  await printTicket(context);
                 }),
             ElevatedButton(
                 style: ButtonStyle(
@@ -283,7 +204,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
                       color: Colors.amber[900], fontWeight: FontWeight.w900),
                 ),
                 onPressed: () {
-                  _removeFormDialog(context, invoice);
+                  _removeFormDialog(context, data[0].id);
                 }),
           ],
         ),
@@ -291,225 +212,32 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
     );
   }
 
-  Future<void> printTicket() async {
+  Future<void> printTicket(context) async {
     String? isConnected = await BluetoothThermalPrinter.connectionStatus;
     if (isConnected == "true") {
-      List<int> bytes = await getTicket();
-      final result = await BluetoothThermalPrinter.writeBytes(bytes);
-      print("Print $result");
-    } else {
-      _failed();
-    }
-  }
-
-  Future<List<int>> getTicket() async {
-    List<int> bytes = [];
-    CapabilityProfile profile = await CapabilityProfile.load();
-    final generator = Generator(PaperSize.mm58, profile);
-
-    for (var i = 0; i < _mainList.length; i++) {
-      //images logo
-      if (_mainList[i].logo != "") {
-        final File path = File(_mainList[i].logo.toString());
-        final Uint8List a = path.readAsBytesSync();
-        final Image? images = decodeImage(a);
-
-        bytes += generator.image(images!);
-      }
-      //named store
-      if (_mainList[i].store != "") {
-        bytes += generator.text("${_mainList[i].store}",
-            styles: PosStyles(
-              align: PosAlign.center,
-              height: PosTextSize.size2,
-              width: PosTextSize.size2,
-            ),
-            linesAfter: 1);
-      }
-      //datenow
-
-      for (var i = 0; i < _transactionList.length; i++) {
-        bytes += generator.text(
-          DateFormat('yyyy-MM-dd HH:mm:ss').format(
-              DateTime.fromMillisecondsSinceEpoch(_transactionList[i].date!)),
-          styles: PosStyles(
-            align: PosAlign.right,
-            bold: true,
-          ),
-        );
-        bytes += generator.text(
-          "Invoice: " + _transactionList[i].noinvoice.toString(),
-          styles: PosStyles(
-            align: PosAlign.left,
-            bold: true,
-            height: PosTextSize.size1,
-            width: PosTextSize.size1,
-          ),
-        );
-        if (_mainList[i].outlet != "") {
-          bytes += generator.text(
-            "Outlet: ${_mainList[i].outlet}",
-            styles: PosStyles(
-              align: PosAlign.left,
-              bold: true,
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-            ),
-          );
-        }
-        if (_mainList[i].address != "") {
-          bytes += generator.text(
-            "Address: ${_mainList[i].address}",
-            styles: PosStyles(
-              align: PosAlign.left,
-              bold: true,
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-            ),
-          );
-        }
-        if (_mainList[i].phone != "") {
-          bytes += generator.text(
-            "Phone: ${_mainList[i].phone}",
-            styles: PosStyles(
-              align: PosAlign.left,
-              bold: true,
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-            ),
-          );
-        }
-        if (_mainList[i].header != "") {
-          bytes += generator.text("${_mainList[i].header}",
-              styles: PosStyles(align: PosAlign.center));
-        }
-        bytes += generator.text(
-          "NAME: ${_transactionList[i].name}",
-          styles: PosStyles(
-            align: PosAlign.left,
-            bold: true,
-            height: PosTextSize.size2,
-            width: PosTextSize.size1,
-          ),
-        );
-
-        bytes += generator.hr(ch: '=');
-        for (var i = 0; i < _detailList.length; i++) {
-          bytes += generator.text(
-            "@ ${_detailList[i].name}",
-            styles: PosStyles(
-              align: PosAlign.left,
-              bold: true,
-            ),
-          );
-          bytes += generator.row([
-            PosColumn(
-                text: "${_detailList[i].qty} x ${_detailList[i].price}",
-                width: 6,
-                styles: PosStyles(
-                  align: PosAlign.left,
-                  height: PosTextSize.size1,
-                  width: PosTextSize.size1,
-                )),
-            PosColumn(
-                text: "${f.format(_detailList[i].total)}",
-                width: 6,
-                styles: PosStyles(
-                  align: PosAlign.right,
-                  height: PosTextSize.size1,
-                  width: PosTextSize.size1,
-                )),
-          ]);
-        }
-        bytes += generator.hr(ch: '=', linesAfter: 1);
-
-        bytes += generator.text(
-          "SubTotal: ${f.format(_transactionList[i].subtotal)}",
-          styles: PosStyles(
-            align: PosAlign.left,
-            bold: true,
-            height: PosTextSize.size1,
-            width: PosTextSize.size1,
-          ),
-        );
-        if (_mainList[i].tax != 0) {
-          bytes += generator.text(
-            "Tax: ${f.format(_transactionList[i].tax)} (${_mainList[i].tax.toString()}%)",
-            styles: PosStyles(
-              align: PosAlign.left,
-              bold: true,
-              height: PosTextSize.size1,
-              width: PosTextSize.size1,
-            ),
-          );
-        }
-        bytes += generator.text(
-          "Discount: ${f.format(_transactionList[i].discount)}",
-          styles: PosStyles(
-            align: PosAlign.left,
-            bold: true,
-            height: PosTextSize.size1,
-            width: PosTextSize.size1,
-          ),
-        );
-        bytes += generator.row([
-          PosColumn(
-              text: 'TOTAL',
-              width: 6,
-              styles: PosStyles(
-                align: PosAlign.left,
-                height: PosTextSize.size2,
-                width: PosTextSize.size1,
-              )),
-          PosColumn(
-              text: f.format(_transactionList[i].nettotal),
-              width: 6,
-              styles: PosStyles(
-                align: PosAlign.right,
-                height: PosTextSize.size2,
-                width: PosTextSize.size1,
-              )),
-        ]);
-        bytes += generator.text(
-          "PAID ${_transactionList[i].type} : ${f.format(_transactionList[i].money)}",
-          styles: PosStyles(
-            align: PosAlign.left,
-            bold: true,
-            height: PosTextSize.size1,
-            width: PosTextSize.size1,
-          ),
-        );
-        bytes +=
-            generator.text("Change : ${f.format(_transactionList[i].change)}",
-                styles: PosStyles(
-                  align: PosAlign.left,
-                  bold: true,
-                  height: PosTextSize.size1,
-                  width: PosTextSize.size1,
-                ),
-                linesAfter: 1);
-      }
-
-      if (_mainList[i].footer != "") {
-        bytes += generator.text("${_mainList[i].footer}",
-            styles: PosStyles(align: PosAlign.center), linesAfter: 1);
-      }
-
-      bytes += generator.text(
-        "*****COPY STRUK*****",
-        styles: PosStyles(
-          align: PosAlign.center,
-          bold: true,
-          height: PosTextSize.size1,
-          width: PosTextSize.size1,
-        ),
+      List<int> bytes = await Print().getTicket(
+        main.data,
+        [],
+        detail,
+        data[0].name,
+        data[0].date,
+        data[0].noinvoice,
+        data[0].subtotal.toString(),
+        data[0].tax.toString(),
+        data[0].discount.toString(),
+        data[0].nettotal.toString(),
+        data[0].typeName.toString(),
+        data[0].money.toString(),
+        data[0].change.toString(),
+        true,
       );
-      bytes += generator.cut();
+      await BluetoothThermalPrinter.writeBytes(bytes);
+    } else {
+      _failed(context);
     }
-    return bytes;
   }
 
-  _failed() {
+  _failed(context) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -550,7 +278,7 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
     );
   }
 
-  _removeFormDialog(BuildContext context, inv) {
+  _removeFormDialog(BuildContext context, id) {
     return showDialog(
       context: context,
       builder: (param) {
@@ -565,12 +293,9 @@ class _InvoiceDetailsState extends State<InvoiceDetails> {
             ),
             TextButton(
               onPressed: () async {
-                await _transactionService.delete(inv);
-                await _detailService.delete(inv);
-                _getInv(invoice);
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => SalesInvoice()));
-                // _showSnackbar(Text("Deleted"));
+                await trx.deletetrx(id);
+                Get.back();
+                Get.back();
               },
               child: Text(
                 'OK',
