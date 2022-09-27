@@ -28,7 +28,7 @@ Fitur-fitur yang tersedia pada aplikasi:
 - sqlite (untuk menyimpan data-data permanen pada sistem)
 - esc pos (untuk mencetak struk pada printer thermal bluetooth)
 - shared preference (untuk menyimpan data-data sementara pada sistem)
-- set state management
+- update statemanagement to GetX
 
 
 # Tampilan
