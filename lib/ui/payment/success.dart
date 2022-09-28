@@ -1,5 +1,6 @@
 import 'package:bluetooth_thermal_printer/bluetooth_thermal_printer.dart';
 import 'package:flutter/material.dart' hide Image;
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:untitled2/extender/print.dart';
 import 'package:untitled2/models/cart.dart';
@@ -118,9 +119,9 @@ class Success extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen())),
+                      onPressed: () {
+                        Get.offAll(HomeScreen());
+                      },
                       child: Container(
                         height: 40,
                         width: 190,
