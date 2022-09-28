@@ -6,36 +6,9 @@ class PaymentTypeScreen extends StatelessWidget {
   final typePayment = Get.put(TypePaymentController());
   final _paymentNameController = TextEditingController();
 
-  // var _paymenttype = TypePayment();
-  // var _paymentservice = TypePaymentService();
-
-  // List<TypePayment> _paymentlist = <TypePayment>[];
-  // var typepayment;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getAllpay();
-  //   clearform();
-  // }
-
   clearform() async {
     _paymentNameController.clear();
   }
-
-  // getAllpay() async {
-  //   _paymentlist = <TypePayment>[].toList();
-  //   var payments = await _paymentservice.readPay();
-  //   payments.forEach((a) {
-  //     setState(() {
-  //       var payModel = TypePayment();
-  //       payModel.name = a['name'];
-
-  //       payModel.id = a['id'];
-  //       _paymentlist.add(payModel);
-  //     });
-  //   });
-  // }
 
   _showSnackbar(context, message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: message));
@@ -96,55 +69,56 @@ class PaymentTypeScreen extends StatelessWidget {
 
   _showFormDialog(BuildContext context) {
     return showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (params) {
-          return AlertDialog(
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  clearform();
-                },
-                child: Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ),
-              TextButton(
-                onPressed: () async {
-                  if (_paymentNameController.text.isEmpty) {
-                    _showSnackbar(context, Text("please fill name"));
-                  } else {
-                    // _paymenttype.name = _paymentNameController.text;
-                    typePayment.saveData(_paymentNameController.text);
-                    // await _paymentservice.savePay(_paymenttype);
-                    Navigator.pop(context);
-                    // getAllpay();
-                    typePayment.getData();
-                    _showSnackbar(context, Text("Saved"));
-                    clearform();
-                  }
-                },
-                child: Text(
-                  'Save',
-                  style: TextStyle(color: Colors.amber),
-                ),
-              ),
-            ],
-            title: Text("Type Payment Form"),
-            content: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  TextField(
-                    controller: _paymentNameController,
-                    decoration: InputDecoration(
-                        hintText: "Input Name", labelText: "Name"),
-                  ),
-                ],
+      context: context,
+      barrierDismissible: true,
+      builder: (params) {
+        return AlertDialog(
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                clearform();
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.grey),
               ),
             ),
-          );
-        });
+            TextButton(
+              onPressed: () async {
+                if (_paymentNameController.text.isEmpty) {
+                  _showSnackbar(context, Text("please fill name"));
+                } else {
+                  // _paymenttype.name = _paymentNameController.text;
+                  typePayment.saveData(_paymentNameController.text);
+                  // await _paymentservice.savePay(_paymenttype);
+                  Navigator.pop(context);
+                  // getAllpay();
+                  typePayment.getData();
+                  _showSnackbar(context, Text("Saved"));
+                  clearform();
+                }
+              },
+              child: Text(
+                'Save',
+                style: TextStyle(color: Colors.amber),
+              ),
+            ),
+          ],
+          title: Text("Type Payment Form"),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                TextField(
+                  controller: _paymentNameController,
+                  decoration: InputDecoration(
+                      hintText: "Input Name", labelText: "Name"),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

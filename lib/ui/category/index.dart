@@ -16,18 +16,6 @@ class CategoryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        // leading: ElevatedButton(
-        //   onPressed: () {
-        //     Navigator.of(context).pushReplacement(
-        //         MaterialPageRoute(builder: (context) => HomeScreen()));
-        //   },
-        //   child: Icon(
-        //     Icons.arrow_back_ios,
-        //     color: Colors.white,
-        //   ),
-        //   style: ElevatedButton.styleFrom(
-        //       primary: Colors.amber[600], elevation: 0.0),
-        // ),
         actions: [
           IconButton(
             icon: Icon(
@@ -90,7 +78,6 @@ class CategoryScreen extends StatelessWidget {
       barrierDismissible: true,
       builder: (params) {
         return AlertDialog(
-          
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0))),
           actions: <Widget>[

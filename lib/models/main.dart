@@ -1,28 +1,3 @@
-class Mains {
-  int? id;
-  String? outlet;
-  String? store;
-  String? address;
-  String? phone;
-  int? typetax;
-  double? tax;
-  String? header;
-  String? footer;
-  String? logo;
-  Map<String, dynamic> mainsMap() => {
-        "id": id,
-        "outlet": outlet,
-        "store": store,
-        "address": address,
-        "phone": phone,
-        "typetax": typetax,
-        "tax": tax,
-        "header": header,
-        "footer": footer,
-        "logo": logo,
-      };
-}
-
 class Stores {
   final id;
   final outlet;

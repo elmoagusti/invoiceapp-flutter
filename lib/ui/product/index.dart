@@ -223,10 +223,6 @@ class ProductScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () async {
-                // await _productService.deleteProduct(productId);
-                // getAllProducts();
-                // Navigator.pop(context);
-                // _showSnackbar(Text("Deleted"));
                 _product.deleteData(productId);
                 _product.getData();
                 Navigator.pop(context);

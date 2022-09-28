@@ -8,18 +8,6 @@ import 'package:untitled2/models/transaction.dart';
 import 'package:untitled2/models/transaction_details.dart';
 import '../../controller/store.dart';
 
-// class InvoiceDetails extends StatefulWidget {
-//   final String invoice;
-
-//   const InvoiceDetails({
-//     Key? key,
-//     required this.invoice,
-//   }) : super(key: key);
-
-//   @override
-//   _InvoiceDetailsState createState() => _InvoiceDetailsState(invoice);
-// }
-
 class InvoiceDetails extends StatelessWidget {
   final trx = Get.put(TransactionsController());
   final f = NumberFormat("Rp #,##0", "en_US");
@@ -32,18 +20,6 @@ class InvoiceDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        // leading: ElevatedButton(
-        //   onPressed: () {
-        //     Navigator.of(context).pushReplacement(
-        //         MaterialPageRoute(builder: (context) => SalesInvoice()));
-        //   },
-        //   child: Icon(
-        //     Icons.arrow_back_ios,
-        //     color: Colors.white,
-        //   ),
-        //   style: ElevatedButton.styleFrom(
-        //       primary: Colors.amber[600], elevation: 0.0),
-        // ),
         actions: [],
         title: Text('Detail Transaction'),
       ),
@@ -121,7 +97,6 @@ class InvoiceDetails extends StatelessWidget {
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(1, 0, 1, 0),
                     child: Card(
-                      // elevation: 11,
                       child: ListTile(
                           title: Row(
                             children: <Widget>[

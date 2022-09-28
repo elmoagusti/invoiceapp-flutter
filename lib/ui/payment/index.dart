@@ -69,20 +69,15 @@ class PaymentScreen extends StatelessWidget {
               primary: Colors.amber[600], elevation: 0.0),
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.monetization_on,
-              color: Colors.white,
-            ),
-            onPressed: () async {
-              // int a = await SharedPref.getData();
-              // print(trx.no);
-              trx.noUp();
-              // print(trx.noinvoice.value);
-              // print(a);
-              // await SharedPref.saveData(a + 1);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(
+          //     Icons.monetization_on,
+          //     color: Colors.white,
+          //   ),
+          //   onPressed: () async {
+          //     trx.noUp();
+          //   },
+          // ),
         ],
         title: Text('PAYMENT'),
       ),

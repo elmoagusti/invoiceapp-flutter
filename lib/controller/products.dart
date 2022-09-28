@@ -36,7 +36,6 @@ class ProductsController extends GetxController {
   }
 
   deleteData(productId) async {
-    // final _productService = ProductService();
     return await ProductService().deleteProduct(productId);
   }
 

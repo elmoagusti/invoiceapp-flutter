@@ -1,12 +1,7 @@
 import 'dart:async';
-// import 'dart:typed_data';
-// import 'dart:io';
-// import 'package:image/image.dart';
 import 'package:bluetooth_thermal_printer/bluetooth_thermal_printer.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:esc_pos_utils_plus/esc_pos_utils.dart';
-// import 'package:flutter/services.dart';
-
 
 class Printer extends StatefulWidget {
   @override
@@ -43,17 +38,6 @@ class _PrinterState extends State<Printer> {
     }
   }
 
-  // Future<void> printTicket() async {
-  //   String? isConnected = await BluetoothThermalPrinter.connectionStatus;
-  //   if (isConnected == "true") {
-  //     List<int> bytes = await getTicket();
-  //     final result = await BluetoothThermalPrinter.writeBytes(bytes);
-  //     print("Print $result");
-  //   } else {
-  //     //Hadnle Not Connected Senario
-  //   }
-  // }
-
   Future<void> printGraphics() async {
     String? isConnected = await BluetoothThermalPrinter.connectionStatus;
     if (isConnected == "true") {
@@ -67,10 +51,8 @@ class _PrinterState extends State<Printer> {
 
   Future<List<int>> getGraphicsTicket() async {
     List<int> bytes = [];
-
     CapabilityProfile profile = await CapabilityProfile.load();
     final generator = Generator(PaperSize.mm80, profile);
-
     // Print QR Code using native function
     bytes += generator.text(
       "CONNECTED!",
@@ -84,346 +66,10 @@ class _PrinterState extends State<Printer> {
         "Terimakasih sudah membeli produk kami, jika kamu membelinya secara legal maka kamu mendapat dukungan penuh support 1x24 jam. kamu dapat menghubungi whatstapp: +62859106961034",
         styles: PosStyles(align: PosAlign.center));
     bytes += generator.qrcode('https://wa.me/62859106961034');
-
-    // Print Barcode using native function
-    // final List<int> barData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 4];
-    // bytes += generator.barcode(Barcode.upcA(barData));
     bytes += generator.drawer();
     bytes += generator.cut();
-
     return bytes;
   }
-
-  //testing
-  // Future<List<int>> getGraphicsTicket() async {
-  //   List<int> bytes = [];
-
-  //   CapabilityProfile profile = await CapabilityProfile.load();
-  //   final generator = Generator(PaperSize.mm58, profile);
-  //   final ByteData data = await rootBundle.load('images/inneed.png');
-  //   final Uint8List byte = data.buffer.asUint8List();
-  //   final Image image = decodeImage(byte)!;
-
-  //   bytes += generator.image(image);
-  //   bytes += generator.text("Store Name",
-  //       styles: PosStyles(
-  //         align: PosAlign.center,
-  //         height: PosTextSize.size2,
-  //         width: PosTextSize.size2,
-  //       ),
-  //       linesAfter: 2);
-  //   bytes += generator.text(
-  //     "27-08-2021 11:25:26",
-  //     styles: PosStyles(
-  //       align: PosAlign.right,
-  //       bold: true,
-  //     ),
-  //   );
-  //   bytes += generator.text(
-  //     "Invoice: INV001002003",
-  //     styles: PosStyles(
-  //       align: PosAlign.left,
-  //       bold: true,
-  //       height: PosTextSize.size1,
-  //       width: PosTextSize.size1,
-  //     ),
-  //   );
-  //   bytes += generator.text(
-  //     "Outlet: Cabang Bogor",
-  //     styles: PosStyles(
-  //       align: PosAlign.left,
-  //       bold: true,
-  //       height: PosTextSize.size1,
-  //       width: PosTextSize.size1,
-  //     ),
-  //   );
-  //   bytes += generator.hr(ch: '=');
-  //   for (var i = 0; i < 2; i++) {
-  //     bytes += generator.text(
-  //       "ayam geprek bensu",
-  //       styles: PosStyles(
-  //         align: PosAlign.left,
-  //         bold: true,
-  //       ),
-  //     );
-  //     bytes += generator.row([
-  //       PosColumn(
-  //           text: '9 x 100000',
-  //           width: 6,
-  //           styles: PosStyles(
-  //             align: PosAlign.left,
-  //             height: PosTextSize.size1,
-  //             width: PosTextSize.size1,
-  //           )),
-  //       PosColumn(
-  //           text: "Rp 900,000.00",
-  //           width: 6,
-  //           styles: PosStyles(
-  //             align: PosAlign.right,
-  //             height: PosTextSize.size1,
-  //             width: PosTextSize.size1,
-  //           )),
-  //     ]);
-  //   }
-  //   bytes += generator.hr(ch: '=', linesAfter: 1);
-  //   bytes += generator.text(
-  //     "Subtotal: Rp 180,000.00",
-  //     styles: PosStyles(
-  //       align: PosAlign.left,
-  //       bold: true,
-  //       height: PosTextSize.size1,
-  //       width: PosTextSize.size1,
-  //     ),
-  //   );
-  //   bytes += generator.text(
-  //     "Tax: Rp 0.0",
-  //     styles: PosStyles(
-  //       align: PosAlign.left,
-  //       bold: true,
-  //       height: PosTextSize.size1,
-  //       width: PosTextSize.size1,
-  //     ),
-  //   );
-  //   bytes += generator.row([
-  //     PosColumn(
-  //         text: 'TOTAL',
-  //         width: 6,
-  //         styles: PosStyles(
-  //           align: PosAlign.left,
-  //           height: PosTextSize.size2,
-  //           width: PosTextSize.size1,
-  //         )),
-  //     PosColumn(
-  //       text: "Rp 1,800,000.00",
-  //       width: 6,
-  //       styles: PosStyles(
-  //         align: PosAlign.right,
-  //         height: PosTextSize.size2,
-  //         width: PosTextSize.size1,
-  //       ),
-  //     ),
-  //   ]);
-  //   bytes += generator.text(
-  //     "Money: Rp 1,800,000.00",
-  //     styles: PosStyles(
-  //       align: PosAlign.left,
-  //       bold: true,
-  //       height: PosTextSize.size1,
-  //       width: PosTextSize.size1,
-  //     ),
-  //   );
-  //   bytes += generator.text("Change: Rp 0.0",
-  //       styles: PosStyles(
-  //         align: PosAlign.left,
-  //         bold: true,
-  //         height: PosTextSize.size1,
-  //         width: PosTextSize.size1,
-  //       ),
-  //       linesAfter: 1);
-  //   bytes += generator.text(
-  //     "Terimakasih",
-  //     styles: PosStyles(
-  //       align: PosAlign.center,
-  //       bold: true,
-  //       height: PosTextSize.size1,
-  //       width: PosTextSize.size1,
-  //     ),
-  //   );
-  //   bytes += generator.cut();
-
-  //   return bytes;
-  // }
-
-//   Future<List<int>> getTicket() async {
-//     List<int> bytes = [];
-//     CapabilityProfile profile = await CapabilityProfile.load();
-//     final generator = Generator(PaperSize.mm58, profile);
-//     final File path = File(
-//         "/data/user/0/com.example.untitled2/cache/scaled_image_picker383474335626035781.jpg");
-//     final Uint8List a = path.readAsBytesSync();
-//     final Image? images = decodeImage(a);
-//     // final ByteData data = await rootBundle.load('images/inneed1.jpeg');
-//     // final Uint8List byte = data.buffer.asUint8List();
-//     // final Image image = decodeImage(byte)!;
-
-//     //awal
-//     // final ByteData data = await rootBundle.load('images/inneed.png');
-//     // final Uint8List byte = data.buffer.asUint8List();
-//     // final Image? image = decodeImage(byte);
-
-// // Using `ESC *`
-
-//     bytes += generator.image(images!);
-//     bytes += generator.text("Store Name",
-//         styles: PosStyles(
-//           align: PosAlign.center,
-//           height: PosTextSize.size2,
-//           width: PosTextSize.size2,
-//         ),
-//         linesAfter: 1);
-//     bytes += generator.text(
-//       "27-08-2021 11:25:26",
-//       styles: PosStyles(
-//         align: PosAlign.right,
-//         bold: true,
-//       ),
-//     );
-//     bytes += generator.hr(ch: '=');
-//     for (var i = 0; i < 2; i++) {
-//       bytes += generator.text(
-//         "ayam geprek bensu",
-//         styles: PosStyles(
-//           align: PosAlign.left,
-//           bold: true,
-//         ),
-//       );
-//       bytes += generator.row([
-//         PosColumn(
-//             text: '9 x 100000',
-//             width: 6,
-//             styles: PosStyles(
-//               align: PosAlign.left,
-//               height: PosTextSize.size1,
-//               width: PosTextSize.size1,
-//             )),
-//         PosColumn(
-//             text: "Rp 999,000.00",
-//             width: 6,
-//             styles: PosStyles(
-//               align: PosAlign.right,
-//               height: PosTextSize.size1,
-//               width: PosTextSize.size1,
-//             )),
-//       ]);
-//     }
-//     bytes += generator.hr(ch: '=', linesAfter: 1);
-//     // bytes += generator.image(images!);
-
-//     // bytes += generator.text(
-//     //     "18th Main Road, 2nd Phase, J. P. Nagar, Bengaluru, Karnataka 560078",
-//     //     styles: PosStyles(align: PosAlign.center));
-//     // bytes += generator.text('Tel: +919591708470',
-//     //     styles: PosStyles(align: PosAlign.center));
-
-//     // bytes += generator.hr();
-
-//     // bytes += generator.row([
-//     //   PosColumn(text: "1", width: 1),
-//     //   PosColumn(
-//     //       text: "Tea",
-//     //       width: 5,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.left,
-//     //       )),
-//     //   PosColumn(
-//     //       text: "10",
-//     //       width: 2,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.center,
-//     //       )),
-//     //   PosColumn(text: "1", width: 2, styles: PosStyles(align: PosAlign.center)),
-//     //   PosColumn(text: "10", width: 2, styles: PosStyles(align: PosAlign.right)),
-//     // ]);
-
-//     // bytes += generator.row([
-//     //   PosColumn(text: "2", width: 1),
-//     //   PosColumn(
-//     //       text: "Sada Dosa",
-//     //       width: 5,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.left,
-//     //       )),
-//     //   PosColumn(
-//     //       text: "30",
-//     //       width: 2,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.center,
-//     //       )),
-//     //   PosColumn(text: "1", width: 2, styles: PosStyles(align: PosAlign.center)),
-//     //   PosColumn(text: "30", width: 2, styles: PosStyles(align: PosAlign.right)),
-//     // ]);
-
-//     // bytes += generator.row([
-//     //   PosColumn(text: "3", width: 1),
-//     //   PosColumn(
-//     //       text: "Masala Dosa",
-//     //       width: 5,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.left,
-//     //       )),
-//     //   PosColumn(
-//     //       text: "50",
-//     //       width: 2,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.center,
-//     //       )),
-//     //   PosColumn(text: "1", width: 2, styles: PosStyles(align: PosAlign.center)),
-//     //   PosColumn(text: "50", width: 2, styles: PosStyles(align: PosAlign.right)),
-//     // ]);
-
-//     // bytes += generator.row([
-//     //   PosColumn(text: "4", width: 1),
-//     //   PosColumn(
-//     //       text: "Rova Dosa",
-//     //       width: 5,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.left,
-//     //       )),
-//     //   PosColumn(
-//     //       text: "70",
-//     //       width: 2,
-//     //       styles: PosStyles(
-//     //         align: PosAlign.center,
-//     //       )),
-//     //   PosColumn(text: "1", width: 2, styles: PosStyles(align: PosAlign.center)),
-//     //   PosColumn(text: "70", width: 2, styles: PosStyles(align: PosAlign.right)),
-//     // ]);
-
-//     // bytes += generator.hr();
-
-  // bytes += generator.row([
-  //   PosColumn(
-  //       text: 'TOTAL',
-  //       width: 6,
-  //       styles: PosStyles(
-  //         align: PosAlign.left,
-  //         height: PosTextSize.size2,
-  //         width: PosTextSize.size1,
-  //       )),
-  //   PosColumn(
-  //       text: "Rp 1.999,000.00",
-  //       width: 6,
-  //       styles: PosStyles(
-  //         align: PosAlign.right,
-  //         height: PosTextSize.size2,
-  //         width: PosTextSize.size1,
-  //       )),
-  // ]);
-
-//     // bytes += generator.hr(ch: '=', linesAfter: 1);
-
-//     // // ticket.feed(2);
-//     // bytes += generator.text('Thank you!',
-//     //     styles: PosStyles(align: PosAlign.center, bold: true));
-
-//     // bytes += generator.text(
-//     //   "ayam geprek bensu",
-//     //   styles: PosStyles(align: PosAlign.left),
-//     // );
-//     // bytes += generator.text(
-//     //   "2 x 25000",
-//     //   styles: PosStyles(align: PosAlign.left),
-//     // );
-//     // bytes += generator.text("Rp 50,000.00",
-//     //     styles: PosStyles(align: PosAlign.right), linesAfter: 1);
-
-//     // bytes += generator.
-//     // bytes += generator.text(
-//     //     'Note: Goods once sold will not be taken back or exchanged.',
-//     //     styles: PosStyles(align: PosAlign.center, bold: false));
-//     // bytes += generator.cut();
-//     return bytes;
-//   }
 
   @override
   Widget build(BuildContext context) {
@@ -495,23 +141,6 @@ class _PrinterState extends State<Printer> {
               ),
             ),
           ),
-          // bottomNavigationBar: ElevatedButton(
-          //   style: ButtonStyle(
-          //     backgroundColor: MaterialStateProperty.all(Colors.amber[600]),
-          //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          //       RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(18.0),
-          //       ),
-          //     ),
-          //   ),
-          //   child: Text(
-          //     'GET STARTED',
-          //     style:
-          //         TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
-          //   ),
-          //   onPressed: () => Navigator.of(context).pushReplacement(
-          //       MaterialPageRoute(builder: (context) => HomeScreen())),
-          // ),
         ),
       ),
     );

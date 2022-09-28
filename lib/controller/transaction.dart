@@ -70,7 +70,6 @@ class TransactionsController extends GetxController {
       change: double.parse(change),
     );
     final id = await TransactionService().save(_trx);
-    // print("id transaksi " + id.toString());
     try {
       for (var i = 0; i < cart.length; i++) {
         final _detail = TransactionDetail(
@@ -82,10 +81,7 @@ class TransactionsController extends GetxController {
           total: cart[i].total,
           date: date,
         );
-
         await DetailService().saveCart(_detail);
-
-        // print("id detail " + td.toString());
       }
       gettrx(DateTime.parse(a).millisecondsSinceEpoch,
           DateTime.parse(b).millisecondsSinceEpoch);
@@ -125,7 +121,6 @@ class TransactionsController extends GetxController {
     elmo.forEach((element) {
       n += double.parse(element.nettotal.toString());
     });
-    // print(n);
     settlement.value = n;
   }
 

@@ -22,6 +22,5 @@ class TypePaymentController extends GetxController {
       name: a,
     );
     await TypePaymentService().savePay(_type);
-    // print(data);
   }
 }

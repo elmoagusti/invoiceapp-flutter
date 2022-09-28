@@ -14,20 +14,6 @@ import '../models/main.dart';
 class Print {
   var f = NumberFormat("Rp #,##0", "en_US");
 
-  // Future<void> printTicket(store, detail, name, dateNow, noinvoice, subtotal,
-  //     tax, discount, total, type, money, change, copy) async {
-  //   String? isConnected = await BluetoothThermalPrinter.connectionStatus;
-
-  //   if (isConnected == "true") {
-  //     List<int> bytes = await getTicket(store, detail, name, dateNow, noinvoice,
-  //         subtotal, tax, discount, total, type, money, change, copy);
-  //     final result = await BluetoothThermalPrinter.writeBytes(bytes);
-  //     print("Print $result");
-  //   } else {
-  //     // _failed();
-  //   }
-  // }
-
   Future<List<int>> getTicket(
       List<Stores> store,
       List<Carts> detail,

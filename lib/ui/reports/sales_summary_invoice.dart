@@ -16,18 +16,6 @@ class SalesInvoice extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        // leading: ElevatedButton(
-        //   onPressed: () {
-        //     Navigator.of(context).pushReplacement(
-        //         MaterialPageRoute(builder: (context) => SalesSummary()));
-        //   },
-        //   child: Icon(
-        //     Icons.arrow_back_ios,
-        //     color: Colors.white,
-        //   ),
-        //   style: ElevatedButton.styleFrom(
-        //       primary: Colors.amber[600], elevation: 0.0),
-        // ),
         actions: [],
         title: Text('Transaction'),
       ),
@@ -84,14 +72,7 @@ class SalesInvoice extends StatelessWidget {
                       List<TransactionDetail> b = trx.dataDetail
                           .where((p0) => p0.trxid == trx.data[index].id)
                           .toList();
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => InvoiceDetails(
-                      //       data: a,
-                      //       detail: b,
-                      //     ),
-                      //   ),
-                      // );
+
                       Get.to(InvoiceDetails(data: a, detail: b));
                     },
                   ),

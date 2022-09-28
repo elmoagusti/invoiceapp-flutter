@@ -7,37 +7,6 @@ import 'package:untitled2/models/main.dart';
 import 'package:untitled2/ui/settings/printer.dart';
 import '../home.dart';
 
-// class Success extends StatefulWidget {
-//   final String invoice;
-//   final String name;
-//   final String subtotal;
-//   final String tax;
-//   final String discount;
-//   final String total;
-//   final String date;
-//   final String type;
-//   final String money;
-//   final String change;
-
-//   const Success({
-//     Key? key,
-//     required this.invoice,
-//     required this.name,
-//     required this.subtotal,
-//     required this.tax,
-//     required this.discount,
-//     required this.total,
-//     required this.date,
-//     required this.type,
-//     required this.money,
-//     required this.change,
-//   }) : super(key: key);
-
-//   @override
-//   _SuccessState createState() => _SuccessState(
-//       invoice, name, subtotal, tax, discount, total, date, type, money, change);
-// }
-
 class Success extends StatelessWidget {
   Success(
       {required this.invoice,
@@ -66,61 +35,9 @@ class Success extends StatelessWidget {
   final List<Carts> carts;
   final List<Stores> stores;
 
-  //mains
-  // final _mainService = MainService();
-
   final printer = Print();
-  // List<Mains> _mainList = <Mains>[];
-  //details
+
   final f = NumberFormat("Rp #,##0.00", "en_US");
-  // List<TransactionDetails> _detailList = <TransactionDetails>[];
-  // var _detailService = DetailService();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _getDetailsInv(invoice);
-  //   getMains();
-  // }
-
-  // getMains() async {
-  //   _mainList = <Mains>[].toList();
-  //   var mains = await _mainService.readMain();
-  //   mains.forEach((a) {
-  //     setState(() {
-  //       var mainModel = Mains();
-  //       mainModel.outlet = a['outlet'];
-  //       mainModel.store = a['store'];
-  //       mainModel.address = a['address'];
-  //       mainModel.phone = a['phone'];
-  //       mainModel.tax = a['tax'];
-  //       mainModel.header = a['header'];
-  //       mainModel.footer = a['footer'];
-  //       mainModel.logo = a['logo'];
-  //       mainModel.id = a['id'];
-  //       _mainList.add(mainModel);
-  //     });
-  //   });
-  //   print(mains);
-  // }
-
-  // _getDetailsInv(inv) async {
-  //   _detailList = <TransactionDetails>[].toList();
-  //   var datas = await _detailService.readDatabyInv(inv);
-  //   datas.forEach((data) {
-  //     setState(() {
-  //       var dataModel = TransactionDetails();
-  //       dataModel.id = data['id'];
-  //       dataModel.name = data['name'];
-  //       dataModel.noinvoice = data['noinvoice'];
-  //       dataModel.price = data['price'];
-  //       dataModel.qty = data['qty'];
-  //       dataModel.total = data['total'];
-  //       _detailList.add(dataModel);
-  //     });
-  //   });
-  //   print(datas);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +47,6 @@ class Success extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Column(

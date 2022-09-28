@@ -8,8 +8,8 @@ class CartService {
     _repository = Repository();
   }
 
-  saveCart(Cart product) async {
-    return await _repository?.inserData('carts', product.cartMap());
+  saveCart(Carts product) async {
+    return await _repository?.inserData('carts', product.cartsMap());
   }
 
   readCart() async {
@@ -20,8 +20,8 @@ class CartService {
     return await _repository?.readDataById('carts', cartId);
   }
 
-  updateCart(Cart cart) async {
-    return await _repository?.updateData('carts', cart.cartMap());
+  updateCart(Carts cart) async {
+    return await _repository?.updateData('carts', cart.cartsMap());
   }
 
   deleteProduct(cartId) async {

@@ -14,7 +14,6 @@ class CategoriesController extends GetxController {
   getData() async {
     final category = await CategoryService().readCategory();
     data.value = category.map<Categories>(Categories.fromJson).toList();
-    // print(category);
   }
 
   saveData(String a) async {
@@ -23,7 +22,5 @@ class CategoriesController extends GetxController {
       name: a,
     );
     await CategoryService().saveCategory(_category);
-    // print(data);
-    // return data;
   }
 }

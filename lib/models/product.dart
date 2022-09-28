@@ -1,16 +1,3 @@
-class Product {
-  int? id;
-  String? name;
-  String? category;
-  double? price;
-
-  Map<String, dynamic> productMap() => {
-        "id": id,
-        "name": name,
-        "category": category,
-        "price": price,
-      };
-}
 
 class Products {
   final id;

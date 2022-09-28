@@ -14,8 +14,6 @@ class StoresController extends GetxController {
   getData() async {
     final _main = await MainService().readMain();
     data.value = _main.map<Stores>(Stores.fromJson).toList();
-    // print(_main);
-    // print(data);
   }
 
   saveData(
@@ -33,7 +31,6 @@ class StoresController extends GetxController {
       logo: logo,
     );
     await MainService().saveMain(_main);
-    // print(data);
   }
 
   editData(id, outlet, store, address, phone, typetax, tax, header, footer,
@@ -51,6 +48,5 @@ class StoresController extends GetxController {
       logo: logo,
     );
     await MainService().updateMain(_main);
-    // print(data);
   }
 }
