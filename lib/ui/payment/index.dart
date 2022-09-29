@@ -6,7 +6,6 @@ import 'package:untitled2/controller/products.dart';
 import 'package:untitled2/controller/store.dart';
 import 'package:untitled2/controller/transaction.dart';
 import 'package:untitled2/controller/type_payment.dart';
-import '../home.dart';
 import 'success.dart';
 
 class PaymentScreen extends StatelessWidget {
@@ -56,29 +55,7 @@ class PaymentScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        leading: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          style: ElevatedButton.styleFrom(
-              primary: Colors.amber[600], elevation: 0.0),
-        ),
-        actions: [
-          // IconButton(
-          //   icon: Icon(
-          //     Icons.monetization_on,
-          //     color: Colors.white,
-          //   ),
-          //   onPressed: () async {
-          //     trx.noUp();
-          //   },
-          // ),
-        ],
+        actions: [],
         title: Text('PAYMENT'),
       ),
       body: SingleChildScrollView(

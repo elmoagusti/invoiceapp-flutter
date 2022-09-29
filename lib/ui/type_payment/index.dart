@@ -76,7 +76,7 @@ class PaymentTypeScreen extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
                 clearform();
               },
               child: Text(
@@ -89,11 +89,8 @@ class PaymentTypeScreen extends StatelessWidget {
                 if (_paymentNameController.text.isEmpty) {
                   _showSnackbar(context, Text("please fill name"));
                 } else {
-                  // _paymenttype.name = _paymentNameController.text;
                   typePayment.saveData(_paymentNameController.text);
-                  // await _paymentservice.savePay(_paymenttype);
-                  Navigator.pop(context);
-                  // getAllpay();
+                  Get.back();
                   typePayment.getData();
                   _showSnackbar(context, Text("Saved"));
                   clearform();

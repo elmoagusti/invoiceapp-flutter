@@ -10,7 +10,6 @@ import 'package:untitled2/ui/settings/printer.dart';
 import 'package:untitled2/ui/type_payment/index.dart';
 import '../controller/cart.dart';
 import '../ui/category/index.dart';
-import '../ui/home.dart';
 import '../ui/product/index.dart';
 
 class DrawerNavigate extends StatelessWidget {
@@ -27,18 +26,6 @@ class DrawerNavigate extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(
-                Icons.home,
-                color: Colors.green,
-              ),
-              title: Align(
-                child: Text('Home'),
-                alignment: Alignment(-1.3, 0),
-              ),
-              onTap: () => Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HomeScreen())),
-            ),
-            ListTile(
-              leading: Icon(
                 Icons.account_balance_wallet,
                 color: Colors.amber,
               ),
@@ -46,8 +33,7 @@ class DrawerNavigate extends StatelessWidget {
                 child: Text('Sales Summary'),
                 alignment: Alignment(-1.3, 0),
               ),
-              onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SalesSummary())),
+              onTap: () => Get.to(SalesSummary()),
             ),
             ListTile(
               leading: Icon(
@@ -58,8 +44,7 @@ class DrawerNavigate extends StatelessWidget {
                 child: Text('Product Settings'),
                 alignment: Alignment(-1.3, 0),
               ),
-              onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ProductScreen())),
+              onTap: () => Get.to(ProductScreen()),
             ),
             ListTile(
               leading: Icon(
@@ -70,8 +55,7 @@ class DrawerNavigate extends StatelessWidget {
                 child: Text('Category Settings'),
                 alignment: Alignment(-1.3, 0),
               ),
-              onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => CategoryScreen())),
+              onTap: () => Get.to(CategoryScreen()),
             ),
             ListTile(
               leading: Icon(
@@ -82,8 +66,7 @@ class DrawerNavigate extends StatelessWidget {
                 child: Text('Payment Settings'),
                 alignment: Alignment(-1.3, 0),
               ),
-              onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => PaymentTypeScreen())),
+              onTap: () => Get.to(PaymentTypeScreen()),
             ),
             ListTile(
               leading: Icon(
@@ -95,8 +78,7 @@ class DrawerNavigate extends StatelessWidget {
                 alignment: Alignment(-1.3, 0),
               ),
               onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => MainScreen()));
+                Get.to(MainScreen());
               },
             ),
             ListTile(
@@ -108,8 +90,7 @@ class DrawerNavigate extends StatelessWidget {
                 child: Text('Printer Settings'),
                 alignment: Alignment(-1.3, 0),
               ),
-              onTap: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Printer())),
+              onTap: () => Get.to(Printer()),
             ),
           ],
         ),
@@ -242,13 +223,7 @@ class CartNavigate extends StatelessWidget {
                 } else if (P.data.isEmpty) {
                   message(context, "Type payment is Empty");
                 } else {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => PaymentScreen(
-                          // invoice: "store" + "dateNow" + "count".toString(),
-                          ),
-                    ),
-                  );
+                  Get.to(PaymentScreen());
                 }
               },
               child: Container(
@@ -257,9 +232,6 @@ class CartNavigate extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
-                  // boxShadow: [
-                  //   BoxShadow(color: Colors.amber, spreadRadius: 3),
-                  // ],
                 ),
                 child: Center(
                   child: Text(
@@ -288,7 +260,7 @@ class CartNavigate extends StatelessWidget {
                 top: -40.0,
                 child: InkResponse(
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: CircleAvatar(
                     child: Icon(Icons.close),

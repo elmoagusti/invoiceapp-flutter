@@ -119,7 +119,7 @@ class ProductScreen extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
                 clearform();
               },
               child: Text(
@@ -138,7 +138,7 @@ class ProductScreen extends StatelessWidget {
                   } else {
                     _product.saveData(_productNameController.text,
                         _productPriceController.text, help.a.value);
-                    Navigator.pop(context);
+                    Get.back();
                     _product.getData();
                     _showSnackbar(context,
                         Text(_productNameController.text + " Success Create"));
@@ -154,7 +154,7 @@ class ProductScreen extends StatelessWidget {
                   } else {
                     _product.updateData(id, _productNameController.text,
                         help.a.value, _productPriceController.text);
-                    Navigator.pop(context);
+                    Get.back();
                     _product.getData();
                     _showSnackbar(context,
                         Text(_productNameController.text + " Success Update"));
@@ -215,7 +215,7 @@ class ProductScreen extends StatelessWidget {
         return AlertDialog(
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Get.back(),
               child: Text(
                 'Cancel',
                 style: TextStyle(color: Colors.grey),
@@ -225,7 +225,7 @@ class ProductScreen extends StatelessWidget {
               onPressed: () async {
                 _product.deleteData(productId);
                 _product.getData();
-                Navigator.pop(context);
+                Get.back();
               },
               child: Text(
                 'OK',

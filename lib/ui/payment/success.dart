@@ -167,7 +167,7 @@ class Success extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Get.back();
               },
               child: Text(
                 'close',
@@ -176,9 +176,8 @@ class Success extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => Printer()));
+                Get.back();
+                Get.to(Printer());
               },
               child: Text(
                 'SetUp Printer',

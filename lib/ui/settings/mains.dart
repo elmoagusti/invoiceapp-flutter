@@ -8,8 +8,6 @@ import 'package:untitled2/controller/helper.dart';
 import 'package:untitled2/controller/store.dart';
 import 'package:untitled2/ui/settings/dbsetting.dart';
 
-import '../home.dart';
-
 class MainScreen extends StatelessWidget {
   final help = Get.put(HelpC());
   final store = Get.put(StoresController());
@@ -42,18 +40,6 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber[600],
-        leading: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => HomeScreen()));
-          },
-          child: Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
-          style: ElevatedButton.styleFrom(
-              primary: Colors.amber[600], elevation: 0.0),
-        ),
         actions: [
           store.data.isEmpty
               ?
@@ -76,8 +62,7 @@ class MainScreen extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => DbSetting()));
+              Get.off(DbSetting());
             },
           )
         ],
@@ -172,7 +157,7 @@ class MainScreen extends StatelessWidget {
                 actions: <Widget>[
                   TextButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     child: Text(
                       'Cancel',
@@ -196,7 +181,7 @@ class MainScreen extends StatelessWidget {
                             _controllerFooter.text,
                             help.imgPath.value);
                         store.getData();
-                        Navigator.pop(context);
+                        Get.back();
                         showSnackbar(context,
                             Text("Update Data " + _controllerStore.text));
                         clearform();
@@ -214,7 +199,7 @@ class MainScreen extends StatelessWidget {
                             help.imgPath.value);
 
                         store.getData();
-                        Navigator.pop(context);
+                        Get.back();
                         showSnackbar(context,
                             Text("Saved Data " + _controllerStore.text));
                         clearform();

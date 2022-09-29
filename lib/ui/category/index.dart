@@ -83,7 +83,7 @@ class CategoryScreen extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
                 clearform();
               },
               child: Text(
@@ -98,14 +98,16 @@ class CategoryScreen extends StatelessWidget {
                 } else {
                   categories.saveData(_categoryNameController.text);
                   categories.getData();
-                  Navigator.pop(context);
+                  Get.back();
                   showSnackBar(context, _categoryNameController.text);
                   clearform();
                 }
               },
               child: Text(
                 'Save',
-                style: TextStyle(color: Colors.amber),
+                style: TextStyle(
+                  color: Colors.amber,
+                ),
               ),
             ),
           ],

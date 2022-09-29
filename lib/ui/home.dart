@@ -169,7 +169,7 @@ class HomeScreen extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(30))),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Get.back(),
               child: Text(
                 'Cancel',
                 style: TextStyle(color: Colors.grey),
@@ -185,7 +185,7 @@ class HomeScreen extends StatelessWidget {
                     int.parse(_productQtyController.text),
                     double.parse(_productSubtotalController.text),
                   );
-                  Navigator.pop(context);
+                  Get.back();
                 }
               },
               child: Text(

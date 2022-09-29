@@ -213,7 +213,7 @@ class InvoiceDetails extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                Get.back();
               },
               child: Text(
                 'close',
@@ -252,7 +252,7 @@ class InvoiceDetails extends StatelessWidget {
         return AlertDialog(
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Get.back(),
               child: Text(
                 'Cancel',
                 style: TextStyle(color: Colors.grey),
